@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -43,7 +44,8 @@ include ROOT . '/includes/sidebar.php'; ?>
                                     <?php while ($datafortenant = $resultfortenant->fetch_assoc()) { ?>
                                         <tr>
                                             <td>
-                                                <a href="/ams/user-details.php?user=<?= $datafortenant['tenantID'] ?>">
+                                                <a class="custom__a"
+                                                    href="/ams/user-details.php?user=<?= $datafortenant['tenantID'] ?>">
                                                     <?= $datafortenant['tenantName'] ?></a>
                                             </td>
                                             <td>

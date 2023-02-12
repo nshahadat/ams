@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -194,8 +195,9 @@ if (isset($_POST['collectBtn'])) {
     $otherbill = $_POST['otherbill'];
     $rentdue = $_POST['rentdue'];
     $monthlyrent = $_POST['monthlyrent'];
+    $rentdate = date("Y-m-d");
 
-    $rentsql = "INSERT IGNORE INTO $rent (rentMonth, rentReceived, rentGas, rentCurrent, rentOthers, rentDue, rentAmount, rentApt) VALUES ('$month', '$receivedfrom', '$gasbill', '$elcbill', '$otherbill', '$rentdue',  '$amount', '$apartment')";
+    $rentsql = "INSERT IGNORE INTO $rent (rentMonth, rentReceived, rentGas, rentCurrent, rentOthers, rentDue, rentAmount, rentApt, rentDateOnly) VALUES ('$month', '$receivedfrom', '$gasbill', '$elcbill', '$otherbill', '$rentdue',  '$amount', '$apartment', '$rentdate')";
     $mysqli->query($rentsql) or die($mysqli->error);
 
     $updatemonth = "UPDATE $tenant SET lastPaid = '$month' WHERE apartmentName = '$apartment'";

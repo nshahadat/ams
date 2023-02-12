@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -103,7 +104,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
                                     <div class="icon">
-                                        <i class="zmdi zmdi-male-female"></i>
+                                        <i class="zmdi zmdi-accounts-outline"></i>
                                     </div>
                                     <div class="text">
                                         <h2>

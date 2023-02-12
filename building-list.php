@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -36,7 +37,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                         ?>
                         <div class="col-lg-12">
                             <h2 class="building__header">
-                                <a href="/ams/single-bld.php?bld=<?= $dataforbld['buildingName'] ?>"><?=
+                                <a class="custom__a" href="/ams/single-bld.php?bld=<?= $dataforbld['buildingName'] ?>"><?=
                                       $dataforbld['buildingName'] ?></a>
                             </h2>
                             <div class="table-responsive m-b-40">
@@ -58,8 +59,8 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                     <?= $dataforb01['apartmentName'] ?>
                                                 </td>
                                                 <td>
-                                                    <a href="/ams/user-details.php?user=<?= $dataforb01['tenantName'] ?>">
-                                                        <?= $dataforb01['tenantName'] ?></a>
+                                                    <a class="custom__a"
+                                                        href="/ams/user-details.php?user=<?= $dataforb01['tenantName'] ?>"><?=$dataforb01['tenantName'] ?></a>
                                                 </td>
                                                 <td>
                                                     <?= $dataforb01['tenantContact'] ?>

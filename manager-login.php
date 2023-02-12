@@ -4,46 +4,37 @@ define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/header.php';
 include ROOT . '/includes/db-config.php';
 ?>
-<div class="main-content" style="max-height:100vh;">
+<div class="main-content" style="display:flex; justify-content:center; align-items:center;">
     <div class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
-                            <strong>Manager</strong> Login
-                        </div>
+                        <div class="card-header">Manager Login</div>
                         <div class="card-body card-block">
-                            <form action="" method="post" class="form-horizontal">
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label for="hf-email" class=" form-control-label">Email</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="email" id="hf-email" name="hf-email" placeholder="Enter Email..."
+                            <form action="#" method="post">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </div>
+                                        <input type="email" id="email" name="useremail" placeholder="Manager Email"
                                             class="form-control">
-                                        <span class="help-block">Please enter your email</span>
                                     </div>
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label for="hf-password" class=" form-control-label">Password</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-asterisk"></i>
+                                        </div>
+                                        <input type="password" id="password" name="userpassword"
+                                            placeholder="Manager Password" class="form-control">
                                     </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="password" id="hf-password" name="hf-password"
-                                            placeholder="Enter Password..." class="form-control">
-                                        <span class="help-block">Please enter your password</span>
-                                    </div>
+                                </div>
+                                <div class="form-actions form-group">
+                                    <input type="submit" name="loginBtn" value="Login" class="btn btn-success btn-sm">
                                 </div>
                             </form>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="fa fa-dot-circle-o"></i> Submit
-                            </button>
-                            <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-ban"></i> Reset
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -52,6 +43,31 @@ include ROOT . '/includes/db-config.php';
     </div>
 </div>
 
+<?php
+if (isset($_POST['loginBtn'])) {
+    $useremail = $_POST['useremail'];
+    $userpassword = $_POST['userpassword'];
+
+    $sql = "SELECT * FROM $manager WHERE managerEmail = '$useremail' AND managerPass = '$userpassword'";
+
+    $result = mysqli_query($mysqli, $sql) or die(mysqli_error($mysqli));
+    $numrows = mysqli_num_rows($result);
+
+    if ($numrows == 0) {
+        echo "<script>
+        alert('Wrong email or password');
+        window.location='/ams/manager-login.php';
+        </script>";
+    } else {
+
+        $data = $result->fetch_assoc();
+
+        $_SESSION['username'] = $data['managerName'];
+        $_SESSION['usertype'] = "manager";
+        echo "<script>window.location='/ams/dashboard.php'</script>";
+    }
+}
+?>
 <?php
 include ROOT . '/includes/header.php';
 ?>

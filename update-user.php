@@ -1,6 +1,5 @@
 <?php
 session_start();
-error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -10,6 +9,12 @@ include ROOT . '/includes/sidebar.php'; ?>
 <div class="page-container">
     <?php
     include ROOT . '/includes/header-desktop.php';
+    ?>
+    <?php
+    $user = $_GET['name'];
+    $usersql = "SELECT * FROM $tenant WHERE tenantName = '$user'";
+    $resultforupdate = mysqli_query($mysqli, $usersql) or die(mysqli_error($mysqli));
+    $dataforupdate = $resultforupdate->fetch_assoc();
     ?>
     <?php
     $fetchbldsql = "SELECT * FROM $building";
@@ -23,97 +28,120 @@ include ROOT . '/includes/sidebar.php'; ?>
                     <div class="col-lg-9">
                         <div class="card extra-margin">
                             <div class="card-header">
-                                Add Tenant Form
+                                Update Tenant Form
                             </div>
                             <div class="card-body card-block">
                                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal"
                                     id="info-form">
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">Tenant Name</label>
+                                            <label for="text-input" class=" form-control-label">Tenant Name
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="tenantName"
                                                 placeholder="Tenant Name" class="form-control" required>
-                                            <small class="form-text text-muted">Full Name of the Tenant (As in
-                                                NID)</small>
+                                            <small class="form-text text-muted">
+                                                <?= $dataforupdate['tenantName'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">Father's Name</label>
+                                            <label for="text-input" class=" form-control-label">Father's Name
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="fatherName"
                                                 placeholder="Father's Name" class="form-control" required>
-                                            <small class="form-text text-muted">Full Name of the Father of the Tenant
-                                                (As in
-                                                NID)</small>
+                                            <small class="form-text text-muted">
+                                                <?= $dataforupdate['fatherName'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="email-input" class=" form-control-label">Tenant Email</label>
+                                            <label for="email-input" class=" form-control-label">Tenant Email
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="email" id="email-input" name="tenantEmail"
                                                 placeholder="Tenant Email" class="form-control" required>
-                                            <small class="help-block form-text">Valid email address of the
-                                                tenant</small>
+                                            <small class="help-block form-text">
+                                                <?= $dataforupdate['tenantEmail'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="email-input" class=" form-control-label">Tenant Mobile</label>
+                                            <label for="email-input" class=" form-control-label">Tenant Mobile
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="tel" name="tenantContact" placeholder="Tenant Contact Number"
                                                 class="form-control" required>
-                                            <small class="help-block form-text">Valid Mobile Number of the
-                                                tenant</small>
+                                            <small class="help-block form-text">
+                                                <?= $dataforupdate['tenantContact'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="text-input" class=" form-control-label">Permanent
-                                                Address</label>
+                                                Address
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="prmntadr"
                                                 placeholder="Full Address" class="form-control" required>
-                                            <small class="form-text text-muted">Permanent Address of the Tenant</small>
+                                            <small class="form-text text-muted">
+                                                <?= $dataforupdate['pAddress'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">Village</label>
+                                            <label for="text-input" class=" form-control-label">Village
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="village" placeholder="Village"
                                                 class="form-control" required>
+                                            <small class="form-text text-muted">
+                                                <?= $dataforupdate['village'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">P. O.</label>
+                                            <label for="text-input" class=" form-control-label">P. O.
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="po" placeholder="Post Office"
                                                 class="form-control" required>
+                                            <small class="form-text text-muted">
+                                                <?= $dataforupdate['po'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">P. S.</label>
+                                            <label for="text-input" class=" form-control-label">P. S.
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="ps" placeholder="Police Station"
                                                 class="form-control" required>
+                                            <small class="form-text text-muted">
+                                                <?= $dataforupdate['ps'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">District</label>
+                                            <label for="select" class=" form-control-label">District
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <select name="district" id="select" class="form-control">
@@ -126,25 +154,35 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 <option value="Rangpur">Rangpur</option>
                                                 <option value="Mymensingh">Mymensingh</option>
                                             </select>
+                                            <small class="form-text text-muted">
+                                                <?= $dataforupdate['district'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="email-input" class=" form-control-label">Monthly Rent</label>
+                                            <label for="email-input" class=" form-control-label">Monthly Rent
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="number" name="monRent" class="form-control"
                                                 placeholder="Monthly rent Amount" required>
+                                            <small class="form-text text-muted">
+                                                <?= $dataforupdate['monRent'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="email-input" class=" form-control-label">Tenant Start
-                                                Date</label>
+                                                Date
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="date" name="startDate" class="form-control" required>
-                                            <small class="help-block form-text">Pick the date</small>
+                                            <small class="help-block form-text">
+                                                <?= $dataforupdate['tenantStart'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -194,45 +232,19 @@ include ROOT . '/includes/sidebar.php'; ?>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">NID Number</label>
+                                            <label for="text-input" class=" form-control-label">NID Number
+                                            </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="nidno" placeholder="NID Number"
                                                 class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="file-input" class=" form-control-label">Upload Front side of the
-                                                NID</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <input type="file" id="file-input" name="tenantNIDfront"
-                                                class="form-control-file">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="file-input" class=" form-control-label">Upload Back side of the
-                                                NID</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <input type="file" id="file-input" name="tenantNIDback"
-                                                class="form-control-file">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="file-input" class=" form-control-label">Upload Picture of the
-                                                tenant</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <input type="file" id="file-input" name="tenantpicture"
-                                                class="form-control-file">
+                                            <small class="help-block form-text">
+                                                <?= $dataforupdate['nidNumber'] ?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <input type="submit" name="submitBtn" value="Add"
+                                        <input type="submit" name="submitBtn" value="Update"
                                             class="btn btn-primary btn-sm">
                                         <button type="reset" class="btn btn-danger btn-sm" onclick="resetform()">
                                             Reset
@@ -266,49 +278,29 @@ if (isset($_POST['submitBtn'])) {
     $side = $_POST['whichwing'];
     $nidno = $_POST['nidno'];
     $apartment = "B" . $selectBuilding . "AP" . $floor . $side;
-    $nidFront = $_FILES['tenantNIDfront']['name'];
-    $nidFrontTemp = $_FILES['tenantNIDfront']['tmp_name'];
-    $nidFrontDir = '/ams/users/tenants/tenantsNID/' . $nidFront;
-    $nidBack = $_FILES['tenantNIDback']['name'];
-    $nidBackTemp = $_FILES['tenantNIDback']['tmp_name'];
-    $nidBackDir = '/ams/users/tenants/tenantsNID/' . $nidBack;
-    $picture = $_FILES['tenantpicture']['name'];
-    $pictureTemp = $_FILES['tenantpicture']['tmp_name'];
-    $pictureDir = '/ams/users/tenants/tenantsNID/' . $picture;
-    $pathnidfront = ROOT . '/users/tenants/tenantsNID/' . $nidFront;
-    $pathnidback = ROOT . '/users/tenants/tenantsNID/' . $nidBack;
-    $pathpicture = ROOT . '/users/tenants/tenantsNID/' . $picture;
 
-    move_uploaded_file($nidFrontTemp, $pathnidfront);
-    move_uploaded_file($nidBackTemp, $pathnidback);
-    move_uploaded_file($pictureTemp, $pathpicture);
-
-    $sql = "INSERT IGNORE INTO 
-    tenant (tenantName, apartmentName, tenantContact, monRent, tenantStart, tenantEmail, nidFrontDir, nidBackDir, profilepic, building, fatherName, 	pAddress, po, ps, district, village, nidNumber) 
-    VALUES ('$tenantName', '$apartment', '$tenantContact', '$monRent', '$startDate','$tenantEmail', '$nidFrontDir', '$nidBackDir', '$pictureDir', '$selectBuilding', '$fName', '$pAdd', '$po', '$ps', '$district', '$vill', '$nidno')";
+    $sql = "UPDATE $tenant SET 
+    tenantName = '$tenantName', 
+    apartmentName = '$apartment', 
+    tenantContact = '$tenantContact', 
+    monRent = '$monRent', 
+    tenantStart = '$startDate', 
+    tenantEmail = '$tenantEmail', 
+    building = '$selectBuilding', 
+    fatherName = '$fName', 	
+    pAddress = '$pAdd', 
+    po = '$po', 
+    ps = '$ps', 
+    district = '$district', 
+    village = '$vill', 
+    nidNumber = '$nidno' 
+    WHERE tenantID = '$user'";
 
     $mysqli->query($sql) or die($mysqli->error);
 
-    // Session Variables
-    $_SESSION['tenantName'] = $_POST['tenantName'];
-    $_SESSION['fName'] = $_POST['fatherName'];
-    $_SESSION['tenantEmail'] = $_POST['tenantEmail'];
-    $_SESSION['tenantContact'] = $_POST['tenantContact'];
-    $_SESSION['pAdd'] = $_POST['prmntadr'];
-    $_SESSION['vill'] = $_POST['village'];
-    $_SESSION['po'] = $_POST['po'];
-    $_SESSION['ps'] = $_POST['ps'];
-    $_SESSION['district'] = $_POST['district'];
-    $_SESSION['monRent'] = $_POST['monRent'];
-    $_SESSION['monRentWords'] = convertNumber($_POST['monRent']);
-    $_SESSION['startDate'] = $_POST['startDate'];
-    $_SESSION['nidno'] = $_POST['nidno'];
-    $_SESSION['apartment'] = $floor . $side;
-    $_SESSION['picture'] = '/ams/users/tenants/tenantsNID/' . $picture;
-
     echo "<script>
-    alert('New tenant added succesfully');
-    window.location='/ams/modal-for-tenant.php';
+    alert('Updated succesfully');
+    window.location='/ams/tenants-list.php';
     </script>";
 }
 ?>

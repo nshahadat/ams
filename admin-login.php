@@ -4,11 +4,11 @@ define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/header.php';
 include ROOT . '/includes/db-config.php';
 ?>
-<div class="main-content" style="max-height:100vh;">
+<div class="main-content" style="display:flex; justify-content:center; align-items:center;">
     <div class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">Admin Login</div>
                         <div class="card-body card-block">
@@ -56,8 +56,8 @@ if (isset($_POST['loginBtn'])) {
 
     if ($numrows == 0) {
         echo "<script>
-            alert('Wrong email or password or user type');
-            window.location='/apartment/index.php';
+            alert('Wrong email or password');
+            window.location='/ams/admin-login.php';
             </script>";
     } else {
 
@@ -65,7 +65,7 @@ if (isset($_POST['loginBtn'])) {
 
         $_SESSION['username'] = $data['adminName'];
         $_SESSION['usertype'] = "admin";
-        echo "<script>window.location='/ams/add-tenant.php'</script>";
+        echo "<script>window.location='/ams/dashboard.php'</script>";
     }
 }
 ?>

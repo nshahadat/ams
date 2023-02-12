@@ -5,9 +5,7 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="au theme template" />
-    <meta name="author" content="Hau Nguyen" />
-    <meta name="keywords" content="au theme template" />
+    <meta name="author" content="Kazi Nayeem Hossain" />
 
     <!-- Title Page-->
     <title>AMS</title>
@@ -32,6 +30,7 @@
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all" />
+    <link href="css/custom.css" rel="stylesheet" media="all" />
 </head>
 
 <body>
