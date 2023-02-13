@@ -37,8 +37,8 @@ include ROOT . '/includes/sidebar.php'; ?>
                         ?>
                         <div class="col-lg-12">
                             <h2 class="building__header">
-                                <a class="custom__a" href="/ams/single-bld.php?bld=<?= $dataforbld['buildingName'] ?>"><?=
-                                      $dataforbld['buildingName'] ?></a>
+                                <a class="custom__a" href="/ams/single-bld.php?bld=<?= $dataforbld['buildingName'] ?>
+                                "><?=$dataforbld['buildingName'] ?></a>
                             </h2>
                             <div class="table-responsive m-b-40">
                                 <table class="table table-borderless table-data3">

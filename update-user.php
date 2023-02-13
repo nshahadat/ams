@@ -11,8 +11,8 @@ include ROOT . '/includes/sidebar.php'; ?>
     include ROOT . '/includes/header-desktop.php';
     ?>
     <?php
-    $user = $_GET['name'];
-    $usersql = "SELECT * FROM $tenant WHERE tenantName = '$user'";
+    $user = $_GET['user'];
+    $usersql = "SELECT * FROM $tenant WHERE tenantID = '$user'";
     $resultforupdate = mysqli_query($mysqli, $usersql) or die(mysqli_error($mysqli));
     $dataforupdate = $resultforupdate->fetch_assoc();
     ?>
@@ -25,7 +25,7 @@ include ROOT . '/includes/sidebar.php'; ?>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-lg-12">
                         <div class="card extra-margin">
                             <div class="card-header">
                                 Update Tenant Form
@@ -39,11 +39,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="tenantName"
-                                                placeholder="Tenant Name" class="form-control" required>
-                                            <small class="form-text text-muted">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['tenantName'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=name&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -52,11 +53,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="fatherName"
-                                                placeholder="Father's Name" class="form-control" required>
-                                            <small class="form-text text-muted">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['fatherName'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=fname&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -65,11 +67,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="email" id="email-input" name="tenantEmail"
-                                                placeholder="Tenant Email" class="form-control" required>
-                                            <small class="help-block form-text">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['tenantEmail'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=email&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -78,11 +81,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="tel" name="tenantContact" placeholder="Tenant Contact Number"
-                                                class="form-control" required>
-                                            <small class="help-block form-text">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['tenantContact'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=mobile&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -92,11 +96,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="prmntadr"
-                                                placeholder="Full Address" class="form-control" required>
-                                            <small class="form-text text-muted">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['pAddress'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=address&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -105,11 +110,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="village" placeholder="Village"
-                                                class="form-control" required>
-                                            <small class="form-text text-muted">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['village'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=village&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -118,11 +124,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="po" placeholder="Post Office"
-                                                class="form-control" required>
-                                            <small class="form-text text-muted">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['po'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=po&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -131,11 +138,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="ps" placeholder="Police Station"
-                                                class="form-control" required>
-                                            <small class="form-text text-muted">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['ps'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=ps&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -144,19 +152,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <select name="district" id="select" class="form-control">
-                                                <option value="Dhaka">Dhaka</option>
-                                                <option value="Rajshahi">Rajshahi</option>
-                                                <option value="Khulna">Khulna</option>
-                                                <option value="Barisal">Barisal</option>
-                                                <option value="Sylhet">Sylhet</option>
-                                                <option value="Chittagong">Chittagong</option>
-                                                <option value="Rangpur">Rangpur</option>
-                                                <option value="Mymensingh">Mymensingh</option>
-                                            </select>
-                                            <small class="form-text text-muted">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['district'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=district&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -165,11 +166,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="number" name="monRent" class="form-control"
-                                                placeholder="Monthly rent Amount" required>
-                                            <small class="form-text text-muted">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['monRent'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=rent&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -179,55 +181,25 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="date" name="startDate" class="form-control" required>
-                                            <small class="help-block form-text">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['tenantStart'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=date&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Building of the
-                                                Apartment</label>
+                                            <label for="select" class=" form-control-label">Select Apartment</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <select name="whichbuilding" id="select" class="form-control">
-                                                <?php while ($databld = $resultbld->fetch_assoc()) { ?>
-                                                    <option value="<?= $databld['buildingName'] ?>">
-                                                        <?= $databld['buildingName'] ?>
-                                                    </option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Floor</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="whichfloor" id="select" class="form-control">
-                                                <?php for ($af = 0; $af < 15; $af++) { ?>
-                                                    <option value="<?= $af ?>">
-                                                        <?= $af ?>
-                                                    </option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Side</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="whichwing" id="select" class="form-control">
-                                                <?php for ($cnt = 1; $cnt < 2; $cnt++) {
-                                                    foreach (range('A', 'Z') as $sideapt) { ?>
-                                                        <option value="<?= $sideapt ?>">
-                                                            <?= $sideapt ?>
-                                                        </option>
-                                                    <?php }
-                                                } ?>
-                                            </select>
+                                            <h4 class="form-text text-muted">
+                                                <?= $dataforupdate['apartmentName'] ?>
+                                                <a href="/ams/modal-for-update.php?update=building&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -236,19 +208,13 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="nidno" placeholder="NID Number"
-                                                class="form-control" required>
-                                            <small class="help-block form-text">
+                                            <h4 class="form-text text-muted">
                                                 <?= $dataforupdate['nidNumber'] ?>
-                                            </small>
+                                                <a href="/ams/modal-for-update.php?update=nid&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
                                         </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <input type="submit" name="submitBtn" value="Update"
-                                            class="btn btn-primary btn-sm">
-                                        <button type="reset" class="btn btn-danger btn-sm" onclick="resetform()">
-                                            Reset
-                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -261,48 +227,48 @@ include ROOT . '/includes/sidebar.php'; ?>
 </div>
 
 <?php
-if (isset($_POST['submitBtn'])) {
-    $tenantName = $_POST['tenantName'];
-    $fName = $_POST['fatherName'];
-    $tenantEmail = $_POST['tenantEmail'];
-    $tenantContact = $_POST['tenantContact'];
-    $pAdd = $_POST['prmntadr'];
-    $vill = $_POST['village'];
-    $po = $_POST['po'];
-    $ps = $_POST['ps'];
-    $district = $_POST['district'];
-    $monRent = $_POST['monRent'];
-    $startDate = $_POST['startDate'];
-    $selectBuilding = $_POST['whichbuilding'];
-    $floor = $_POST['whichfloor'];
-    $side = $_POST['whichwing'];
-    $nidno = $_POST['nidno'];
-    $apartment = "B" . $selectBuilding . "AP" . $floor . $side;
+// if (isset($_POST['submitBtn'])) {
+//     $tenantName = $_POST['tenantName'];
+//     $fName = $_POST['fatherName'];
+//     $tenantEmail = $_POST['tenantEmail'];
+//     $tenantContact = $_POST['tenantContact'];
+//     $pAdd = $_POST['prmntadr'];
+//     $vill = $_POST['village'];
+//     $po = $_POST['po'];
+//     $ps = $_POST['ps'];
+//     $district = $_POST['district'];
+//     $monRent = $_POST['monRent'];
+//     $startDate = $_POST['startDate'];
+//     $selectBuilding = $_POST['whichbuilding'];
+//     $floor = $_POST['whichfloor'];
+//     $side = $_POST['whichwing'];
+//     $nidno = $_POST['nidno'];
+//     $apartment = "B" . $selectBuilding . "AP" . $floor . $side;
 
-    $sql = "UPDATE $tenant SET 
-    tenantName = '$tenantName', 
-    apartmentName = '$apartment', 
-    tenantContact = '$tenantContact', 
-    monRent = '$monRent', 
-    tenantStart = '$startDate', 
-    tenantEmail = '$tenantEmail', 
-    building = '$selectBuilding', 
-    fatherName = '$fName', 	
-    pAddress = '$pAdd', 
-    po = '$po', 
-    ps = '$ps', 
-    district = '$district', 
-    village = '$vill', 
-    nidNumber = '$nidno' 
-    WHERE tenantID = '$user'";
+//     $sql = "UPDATE $tenant SET 
+//     tenantName = '$tenantName', 
+//     apartmentName = '$apartment', 
+//     tenantContact = '$tenantContact', 
+//     monRent = '$monRent', 
+//     tenantStart = '$startDate', 
+//     tenantEmail = '$tenantEmail', 
+//     building = '$selectBuilding', 
+//     fatherName = '$fName', 	
+//     pAddress = '$pAdd', 
+//     po = '$po', 
+//     ps = '$ps', 
+//     district = '$district', 
+//     village = '$vill', 
+//     nidNumber = '$nidno' 
+//     WHERE tenantID = '$user'";
 
-    $mysqli->query($sql) or die($mysqli->error);
+//     $mysqli->query($sql) or die($mysqli->error);
 
-    echo "<script>
-    alert('Updated succesfully');
-    window.location='/ams/tenants-list.php';
-    </script>";
-}
+//     echo "<script>
+//     alert('Updated succesfully');
+//     window.location='/ams/tenants-list.php';
+//     </script>";
+// }
 ?>
 <?php
 include ROOT . '/includes/footer.php';
