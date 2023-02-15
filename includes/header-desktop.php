@@ -12,6 +12,7 @@ session_start();
                     <button class="au-btn--submit" type="submit">
                         <i class="zmdi zmdi-search"></i>
                     </button>
+                    <!-- <marquee direction="left" class="au-input--xl">No New Complaints</marquee> -->
                 </form>
                 <div class="header-button">
                     <div class="noti-wrap">

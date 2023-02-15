@@ -29,11 +29,12 @@ include ROOT . '/includes/sidebar.php'; ?>
                                     id="info-form">
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Building of the
+                                            <label for="select" class=" form-control-label">Select Building of
+                                                the
                                                 Apartment</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <select name="whichbuilding" id="select" class="form-control">
+                                            <select name="whichbuilding" id="selectbld" class="form-control">
                                                 <?php while ($databld = $resultbld->fetch_assoc()) { ?>
                                                     <option value="<?= $databld['buildingName'] ?>">
                                                         <?= $databld['buildingName'] ?>
@@ -47,7 +48,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <label for="select" class=" form-control-label">Select Floor</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <select name="whichfloor" id="select" class="form-control">
+                                            <select name="whichfloor" id="selectflr" class="form-control">
                                                 <?php for ($af = 0; $af < 15; $af++) { ?>
                                                     <option value="<?= $af ?>">
                                                         <?= $af ?>
@@ -61,7 +62,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <label for="select" class=" form-control-label">Select Side</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <select name="whichwing" id="select" class="form-control">
+                                            <select name="whichwing" id="selectside" class="form-control">
                                                 <?php for ($cnt = 1; $cnt < 2; $cnt++) {
                                                     foreach (range('A', 'Z') as $sideapt) { ?>
                                                         <option value="<?= $sideapt ?>">
@@ -70,6 +71,14 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                     <?php }
                                                 } ?>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div id="pred"></div>
+                                    <div class="row form-group" id="due">
+                                        <div class="col col-md-3"></div>
+                                        <div class="col-12 col-md-9">
+                                            <button type="button" id="duebtn" class="btn btn-danger btn-sm">Show
+                                                Dues</button>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -99,7 +108,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="receivedfrom"
-                                                placeholder="Enter Full Name" class="form-control" required>
+                                                placeholder="Enter Full Name" class="form-control">
                                             <small class="form-text text-muted">Person who is giving the rent</small>
                                         </div>
                                     </div>
@@ -180,6 +189,33 @@ include ROOT . '/includes/sidebar.php'; ?>
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#selectbld").change(function () {
+            var selectedBld = $(this).val();
+        });
+        $("#selectflr").change(function () {
+            var selectedFlr = $(this).val();
+        });
+        $("#selectside").change(function () {
+            var selectedSide = $(this).val();
+        });
+        $("#duebtn").click(function () {
+            $("#duebtn").addClass("d-none");
+            $.ajax({
+                method: "GET",
+                url: "/ams/dues-backend.php",
+                data: "bld=" + selectedBld + "&flr=" + selectedFlr + "&side=" + selectedSide,
+                success: function (response) {
+                    $("#pred").html(response);
+                }
+            })
+        });
+    });
+</script>
 
 <?php
 if (isset($_POST['collectBtn'])) {
