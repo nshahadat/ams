@@ -46,7 +46,9 @@ include ROOT . '/includes/sidebar.php'; ?>
                                     <?php while ($datafordue = $resultfordue->fetch_assoc()) { ?>
                                         <tr>
                                             <td>
-                                                <?= $datafordue['apartmentName'] ?>
+                                                <a class="custom__a"
+                                                    href="/ams/apt-payment-details.php?apt=<?= $datafordue['apartmentName'] ?>"><?=
+                                                          $datafordue['apartmentName'] ?>
                                             </td>
                                             <td>
                                                 <?= $datafordue['building'] ?>

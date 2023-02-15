@@ -37,6 +37,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         <th>Complain Details</th>
                                         <th>Apartment</th>
                                         <th>Complain Time</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,6 +54,21 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </td>
                                             <td>
                                                 <?= $data['cmpTime'] ?>
+                                            </td>
+                                            <td>
+                                                <div style="display:flex; gap:5px;">
+                                                    <?php if ($data['action'] == 1) { ?>
+                                                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                            disabled><i class="fa fa-check"></i></button>
+                                                    <?php } else if ($data['action'] == 0) { ?>
+                                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                                onclick="window.location='/ams/action-taken.php?cmp=<?= $data['cmpID'] ?>';"><i
+                                                                    class="fa fa-check"></i></button>
+                                                    <?php } ?>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        onclick="window.location='/ams/del-complain.php?cmp=<?= $data['cmpID'] ?>';"><i
+                                                            class="fa fa-ban"></i></button>
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php } ?>

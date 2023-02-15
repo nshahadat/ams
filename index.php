@@ -14,7 +14,9 @@ include ROOT . '/includes/db-config.php';
     <div class="text-gray-700 text-8xl min-w-[100vw] flex justify-center items-center gap-[5px]">
         I'm <button type="button" class="btn btn-outline-primary"
             onclick="window.location='/ams/admin-login.php';">Admin</button> <button type="button"
-            class="btn btn-outline-primary" onclick="window.location='/ams/manager-login.php';">Manager</button>
+            class="btn btn-outline-primary" onclick="window.location='/ams/manager-login.php';">Manager</button> <button
+            type="button" class="btn btn-outline-primary"
+            onclick="window.location='/ams/drop-complain.php';">Tenant</button>
     </div>
 </div>
 
