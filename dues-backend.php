@@ -23,5 +23,3 @@ $datafordue = $resultfordue->fetch_assoc();
             class="form-control" disabled>
     </div>
 </div>
-
-<!-- PROBLEMS > form data variable doesnt get passed -->

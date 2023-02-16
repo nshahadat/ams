@@ -194,17 +194,23 @@ include ROOT . '/includes/sidebar.php'; ?>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+        var selectedBld = 'Labbo';
+        var selectedFlr = 0;
+        var selectedSide = 'A';
+
         $("#selectbld").change(function () {
-            var selectedBld = $(this).val();
+            selectedBld = $(this).val();
+            console.log(selectedBld)
         });
         $("#selectflr").change(function () {
-            var selectedFlr = $(this).val();
+            selectedFlr = $(this).val();
+            console.log(selectedFlr)
         });
         $("#selectside").change(function () {
-            var selectedSide = $(this).val();
+            selectedSide = $(this).val();
+            console.log(selectedSide)
         });
         $("#duebtn").click(function () {
-            $("#duebtn").addClass("d-none");
             $.ajax({
                 method: "GET",
                 url: "/ams/dues-backend.php",
