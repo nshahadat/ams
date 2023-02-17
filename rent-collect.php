@@ -117,7 +117,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <label for="text-input" class="form-control-label">Monthly Rent</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="number" id="text-input" name="monthlyrent"
+                                            <input type="number" id="monthly" name="monthlyrent"
                                                 placeholder="Monthly Rent for this apartment" class="form-control"
                                                 required>
                                         </div>
@@ -127,7 +127,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <label for="text-input" class="form-control-label">Gas Bill</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="number" id="text-input" name="gasbill"
+                                            <input type="number" id="gas" name="gasbill"
                                                 placeholder="Gas bill of this month" class="form-control" required>
                                         </div>
                                     </div>
@@ -136,7 +136,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <label for="text-input" class="form-control-label">Electricity Bill</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="number" id="text-input" name="elcbill"
+                                            <input type="number" id="elc" name="elcbill"
                                                 placeholder="Electricity bill of this month" class="form-control"
                                                 required>
                                         </div>
@@ -146,11 +146,11 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <label for="text-input" class=" form-control-label">Others Bill</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="number" id="text-input" name="otherbill"
+                                            <input type="number" id="other" name="otherbill"
                                                 placeholder="Others bill of this month" class="form-control" required>
                                         </div>
                                     </div>
-                                    <div class="row form-group">
+                                    <!-- <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="text-input" class=" form-control-label">Due</label>
                                         </div>
@@ -162,16 +162,24 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 then enter
                                                 0</small>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="email-input" class=" form-control-label">Received Amount</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="number" name="amount" placeholder="Enter Amount"
+                                            <input type="number" id="recamount" name="amount" placeholder="Enter Amount"
                                                 class="form-control" required>
                                             <small class="help-block form-text">Total amount that has been
                                                 received</small>
+                                        </div>
+                                    </div>
+                                    <div id="tots"></div>
+                                    <div class="row form-group" id="total">
+                                        <div class="col col-md-3"></div>
+                                        <div class="col-12 col-md-9">
+                                            <button type="button" id="totalbtn"
+                                                class="btn btn-secondary btn-sm">Total</button>
                                         </div>
                                     </div>
                                     <div class="card-footer">
@@ -220,6 +228,30 @@ include ROOT . '/includes/sidebar.php'; ?>
                 }
             })
         });
+        $("#totalbtn").click(function () {
+            monthbtn = document.getElementById('monthly');
+            monthvalue = monthbtn.value;
+            elcbtn = document.getElementById('elc');
+            elcvalue = elcbtn.value;
+            gasbtn = document.getElementById('gas');
+            gasvalue = gasbtn.value;
+            otherbtn = document.getElementById('other');
+            othervalue = otherbtn.value;
+            recbtn = document.getElementById('recamount');
+            recvalue = recbtn.value;
+            prevdueinput = document.getElementById('prevdue');
+            prevvalue = prevdueinput.placeholder;
+            $.ajax({
+                method: "GET",
+                url: "/ams/total-backend.php",
+                data: "month=" + monthvalue + "&elc=" + elcvalue + "&gas=" + gasvalue + "&prev=" + prevvalue + "&rec=" + recvalue + "&other=" + othervalue,
+                success: function (response) {
+                    $("#tots").html(response);
+                    console.log(response);
+
+                }
+            })
+        });
     });
 </script>
 
@@ -235,28 +267,47 @@ if (isset($_POST['collectBtn'])) {
     $gasbill = $_POST['gasbill'];
     $elcbill = $_POST['elcbill'];
     $otherbill = $_POST['otherbill'];
-    $rentdue = $_POST['rentdue'];
     $monthlyrent = $_POST['monthlyrent'];
     $rentdate = date("Y-m-d");
 
-    $rentsql = "INSERT IGNORE INTO $rent (rentMonth, rentReceived, rentGas, rentCurrent, rentOthers, rentDue, rentAmount, rentApt, rentDateOnly) VALUES ('$month', '$receivedfrom', '$gasbill', '$elcbill', '$otherbill', '$rentdue',  '$amount', '$apartment', '$rentdate')";
-    $mysqli->query($rentsql) or die($mysqli->error);
+    $aptcheck = "SELECT * FROM apartment WHERE apartmentName = '$apartment'";
+    $result = $mysqli->query($aptcheck) or die($mysqli->error);
+    $numrows = mysqli_num_rows($result);
 
-    $updatemonth = "UPDATE $tenant SET lastPaid = '$month' WHERE apartmentName = '$apartment'";
-    $mysqli->query($updatemonth) or die($mysqli->error);
+    if ($numrows > 0) {
+        $rentsql = "INSERT IGNORE INTO $rent 
+        (rentMonth, rentReceived, rentGas, rentCurrent, rentOthers, rentAmount, rentApt, rentDateOnly) 
+        VALUES 
+        ('$month', '$receivedfrom', '$gasbill', '$elcbill', '$otherbill', '$amount', '$apartment', '$rentdate')";
+        $mysqli->query($rentsql) or die($mysqli->error);
 
-    echo "<script>alert('Rent is collected!')</script>";
-    $_SESSION['apartment'] = $apartment;
-    $_SESSION['month'] = $month;
-    $_SESSION['receivedfrom'] = $receivedfrom;
-    $_SESSION['amount'] = $amount;
-    $_SESSION['gasbill'] = $gasbill;
-    $_SESSION['elcbill'] = $elcbill;
-    $_SESSION['otherbill'] = $otherbill;
-    $_SESSION['rentdue'] = $rentdue;
-    $_SESSION['monthlyrent'] = $monthlyrent;
+        $updatemonth = "UPDATE $tenant SET lastPaid = '$month' WHERE apartmentName = '$apartment'";
+        $mysqli->query($updatemonth) or die($mysqli->error);
 
-    include ROOT . '/modal.php';
+        $dueupdate = $_SESSION['userduepayment'];
+        $updatedue = "UPDATE $dues SET dueAmount = '$dueupdate' WHERE dueApt = '$apartment'";
+        $mysqli->query($updatedue) or die($mysqli->error);
+
+        echo "<script>alert('Rent is collected!')</script>";
+        $_SESSION['apartment'] = $apartment;
+        $_SESSION['month'] = $month;
+        $_SESSION['receivedfrom'] = $receivedfrom;
+        $_SESSION['amount'] = $amount;
+        $_SESSION['gasbill'] = $gasbill;
+        $_SESSION['elcbill'] = $elcbill;
+        $_SESSION['otherbill'] = $otherbill;
+        $_SESSION['rentdue'] = $_SESSION['prevdues'];
+        $_SESSION['monthlyrent'] = $monthlyrent;
+        $_SESSION['newdue'] = $dueupdate;
+
+        include ROOT . '/modal.php';
+
+    } else {
+        echo "<script>
+        alert('This apartment is not yet inlisted. Add it to collect rent.');
+        window.location='/ams/add-apt.php';
+        </script>";
+    }
 }
 ?>
 <?php

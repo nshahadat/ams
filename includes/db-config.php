@@ -10,3 +10,4 @@ $complain = 'complain';
 $building = 'building';
 $apartment = 'apartment';
 $role = 'role';
+$dues = 'dues';

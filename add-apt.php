@@ -94,13 +94,24 @@ if (isset($_POST['addApt'])) {
     $aptside = $_POST['whichwing'];
     $aptName = "B" . $aptBld . "AP" . $aptflr . $aptside;
 
-    $insertaptsql = "INSERT IGNORE INTO $apartment(apartmentName, building) VALUES ('$aptName','$aptBld')";
-    $mysqli->query($insertaptsql) or die($mysqli->error);
+    $aptcheck = "SELECT * FROM $apartment WHERE apartmentName = '$aptName'";
+    $result = $mysqli->query($aptcheck) or die($mysqli->error);
+    $numrows = mysqli_num_rows($result);
 
-    echo "<script>
+    if ($numrows > 0) {
+        echo "<script>
+        alert('This apartment is already in the added.');
+        window.location='/ams/add-apt.php';
+        </script>";
+    } else {
+        $insertaptsql = "INSERT IGNORE INTO $apartment(apartmentName, building) VALUES ('$aptName','$aptBld')";
+        $mysqli->query($insertaptsql) or die($mysqli->error);
+
+        echo "<script>
     alert('Apartment added succesfully');
     window.location='/ams/add-apt.php';
     </script>";
+    }
 }
 
 ?>

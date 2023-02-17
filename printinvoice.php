@@ -4,10 +4,6 @@ define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/header.php';
 ?>
 
-<?php
-$total = $_SESSION['monthlyrent'] + $_SESSION['rentdue'] + $_SESSION['otherbill'] + $_SESSION['elcbill'] + $_SESSION['gasbill'];
-$due = $total - $_SESSION['amount'];
-?>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 
@@ -63,14 +59,14 @@ $due = $total - $_SESSION['amount'];
                         <span>মন্তব্য:</span>
                     </p>
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black"><span><u>
-                                <?= $_SESSION['rentdue'] ?>
+                                <?= $_SESSION['prevdues'] ?>
                             </u>
                             &#2547;</span></p>
                 </div>
                 <div class="flex w-[100%] h-[10%] pt-2">
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black">সর্বমোট প্রদেয়:</p>
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black"><span><u>
-                                <?= $total ?>
+                                <?= $_SESSION['totalrec'] ?>
                             </u>
                             &#2547;</span></p>
                 </div>
@@ -84,7 +80,7 @@ $due = $total - $_SESSION['amount'];
                 <div class="flex w-[100%] h-[10%]">
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black">বকেয়া:</p>
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black"><span><u>
-                                <?= $due ?>
+                                <?= $_SESSION['newdue'] ?>
                             </u>
                             &#2547;</span></p>
                 </div>
