@@ -77,7 +77,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="ownerName"
-                                                placeholder="Owner of this building" class="form-control" required>
+                                                placeholder="Owner of this apartment" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="card-footer">

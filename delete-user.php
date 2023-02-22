@@ -1,0 +1,23 @@
+<?php
+session_start();
+define('ROOT', 'C:/xampp/htdocs/ams');
+include ROOT . '/includes/db-config.php';
+
+$del = $_GET['id'];
+
+$fetch = "SELECT * FROM $tenant WHERE tenantID = $del";
+$resultfetch = $mysqli->query($fetch) or die($mysqli->error);
+$datafetch = $resultfetch->fetch_assoc();
+
+$name = $datafetch['tenantName'];
+
+$updapt = "UPDATE apartment SET TenantName = NULL WHERE TenantName = '$name'";
+$mysqli->query($updapt) or die($mysqli->error);
+
+$sql = "DELETE FROM $tenant WHERE tenantID = $del";
+$mysqli->query($sql) or die($mysqli->error);
+
+
+echo "<script>
+alert('Tenant Deleted Succesfully.');
+window.location='/ams/dashboard.php';</script>";

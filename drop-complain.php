@@ -4,8 +4,7 @@ error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
-include ROOT . '/includes/header-mobile.php';
-include ROOT . '/includes/sidebar.php'; ?>
+include ROOT . '/includes/header-mobile.php'; ?>
 
 <?php
 $fetchbldsql = "SELECT * FROM $building";

@@ -27,8 +27,8 @@ include ROOT . '/includes/sidebar.php'; ?>
                         <div class="card">
                             <div class="card-header custom__div">
                                 <strong class="card-title">Tenant Information</strong>
-                                <a href="/ams/delete-user.php?name=<?= $dataforb01['tenantName'] ?>"><input
-                                        type="submit" value="Delete" class="btn btn-danger card-title"></a>
+                                <a href="/ams/delete-user.php?id=<?= $dataforb01['tenantID'] ?>"><input type="submit"
+                                        value="Delete" class="btn btn-danger card-title"></a>
                                 <a href="/ams/update-user.php?user=<?= $dataforb01['tenantID'] ?>"><input type="submit"
                                         value="Update" class="btn btn-danger card-title"></a>
                             </div>

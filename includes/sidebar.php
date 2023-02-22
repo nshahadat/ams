@@ -32,6 +32,9 @@
                         <li>
                             <a href="/ams/apt-list.php">Apartment List</a>
                         </li>
+                        <li>
+                            <a href="/ams/apt-blank-list.php">Blank Apartment List</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="has-sub">

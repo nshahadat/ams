@@ -21,7 +21,7 @@ include ROOT . '/includes/sidebar.php'; ?>
 //     }
 // }
     
-    $sqlformonth = "SELECT * FROM $apartment ORDER BY apartmentName DESC";
+    $sqlformonth = "SELECT * FROM $apartment WHERE TenantName IS NULL ORDER BY apartmentName DESC";
     $resultformonth = mysqli_query($mysqli, $sqlformonth) or die(mysqli_error($mysqli));
     ?>
 
@@ -46,13 +46,14 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         <tr>
                                             <td>
                                                 <a class="custom__a"
-                                                    href="/ams/apt-payment-details.php?apt=<?= $dataformonth['apartmentName'] ?>"><?= $dataformonth['apartmentName'] ?></a>
+                                                    href="/ams/apt-payment-details.php?apt=<?= $dataformonth['apartmentName'] ?>"><?=
+                                                          $dataformonth['apartmentName'] ?></a>
                                             </td>
                                             <td>
                                                 <?= $dataformonth['aptOwner'] ?>
                                             </td>
                                             <td>
-                                                <?= $dataformonth['TenantName'] ?>
+                                                Not Rented Yet
                                             </td>
                                             <td>
                                                 <?= $dataformonth['building'] ?>
