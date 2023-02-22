@@ -71,6 +71,15 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label for="select" class=" form-control-label">Enter Owner Name</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <input type="text" id="text-input" name="ownerName"
+                                                placeholder="Owner of this building" class="form-control" required>
+                                        </div>
+                                    </div>
                                     <div class="card-footer">
                                         <input type="submit" name="addApt" class="btn btn-primary btn-sm">
                                         <button type="reset" class="btn btn-danger btn-sm"
@@ -93,6 +102,7 @@ if (isset($_POST['addApt'])) {
     $aptflr = $_POST['whichfloor'];
     $aptside = $_POST['whichwing'];
     $aptName = "B" . $aptBld . "AP" . $aptflr . $aptside;
+    $owner = $_POST['ownerName'];
 
     $aptcheck = "SELECT * FROM $apartment WHERE apartmentName = '$aptName'";
     $result = $mysqli->query($aptcheck) or die($mysqli->error);
@@ -100,11 +110,11 @@ if (isset($_POST['addApt'])) {
 
     if ($numrows > 0) {
         echo "<script>
-        alert('This apartment is already in the added.');
+        alert('This apartment is already added.');
         window.location='/ams/add-apt.php';
         </script>";
     } else {
-        $insertaptsql = "INSERT IGNORE INTO $apartment(apartmentName, building) VALUES ('$aptName','$aptBld')";
+        $insertaptsql = "INSERT IGNORE INTO $apartment(apartmentName, building, aptOwner) VALUES ('$aptName','$aptBld','$owner')";
         $mysqli->query($insertaptsql) or die($mysqli->error);
 
         echo "<script>

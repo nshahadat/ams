@@ -21,7 +21,7 @@ include ROOT . '/includes/sidebar.php'; ?>
 //     }
 // }
     
-    $sqlformonth = "SELECT * FROM $rent ORDER BY rentApt ASC";
+    $sqlformonth = "SELECT * FROM $apartment ORDER BY apartmentName DESC";
     $resultformonth = mysqli_query($mysqli, $sqlformonth) or die(mysqli_error($mysqli));
     ?>
 
@@ -34,36 +34,30 @@ include ROOT . '/includes/sidebar.php'; ?>
                             <table class="table table-borderless table-striped table-earning">
                                 <thead>
                                     <tr>
-                                        <th>Received Date</th>
                                         <th>Apartment</th>
-                                        <th>Received from</th>
-                                        <th>Last Paid Month</th>
-                                        <th>Last Paid <br>Amount</th>
+                                        <th>Owner</th>
+                                        <th>Tenant</th>
+                                        <th>Building</th>
+                                        <th>Monthly Fair</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php while ($dataformonth = $resultformonth->fetch_assoc()) { ?>
                                         <tr>
                                             <td>
-                                                <a class="custom__a"
-                                                    href="/ams/date-received.php?date=<?= $dataformonth['rentDateOnly'] ?>"><?=
-                                                          $dataformonth['rentDate'] ?></a>
+                                                <?= $dataformonth['apartmentName'] ?>
                                             </td>
                                             <td>
-                                                <a class="custom__a"
-                                                    href="/ams/apt-payment-details.php?apt=<?= $dataformonth['rentApt'] ?>"><?=
-                                                          $dataformonth['rentApt'] ?></a>
+                                                <?= $dataformonth['aptOwner'] ?>
                                             </td>
                                             <td>
-                                                <?= $dataformonth['rentReceived'] ?>
+                                                <?= $dataformonth['TenantName'] ?>
                                             </td>
                                             <td>
-                                                <a class="custom__a"
-                                                    href="/ams/monthly-details.php?month=<?= $dataformonth['rentMonth'] ?>"><?=
-                                                          $dataformonth['rentMonth'] ?></a>
+                                                <?= $dataformonth['building'] ?>
                                             </td>
                                             <td>
-                                                <?= $dataformonth['rentAmount'] ?>
+                                                <?= $dataformonth['aptFair'] ?>
                                             </td>
                                         </tr>
                                     <?php } ?>

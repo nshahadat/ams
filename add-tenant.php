@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+// error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -279,37 +279,51 @@ if (isset($_POST['submitBtn'])) {
     $pathnidback = ROOT . '/users/tenants/tenantsNID/' . $nidBack;
     $pathpicture = ROOT . '/users/tenants/tenantsNID/' . $picture;
 
-    move_uploaded_file($nidFrontTemp, $pathnidfront);
-    move_uploaded_file($nidBackTemp, $pathnidback);
-    move_uploaded_file($pictureTemp, $pathpicture);
+    $updateapt = "UPDATE apartment SET 
+    TenantName = '$tenantName',
+    aptFair = '$monRent'
+    WHERE apartmentName = '$apartment'";
 
-    $sql = "INSERT IGNORE INTO 
-    tenant (tenantName, apartmentName, tenantContact, monRent, tenantStart, tenantEmail, nidFrontDir, nidBackDir, profilepic, building, fatherName, 	pAddress, po, ps, district, village, nidNumber) 
-    VALUES ('$tenantName', '$apartment', '$tenantContact', '$monRent', '$startDate','$tenantEmail', '$nidFrontDir', '$nidBackDir', '$pictureDir', '$selectBuilding', '$fName', '$pAdd', '$po', '$ps', '$district', '$vill', '$nidno')";
+    if ($mysqli->query($updateapt)) {
 
-    $mysqli->query($sql) or die($mysqli->error);
+        move_uploaded_file($nidFrontTemp, $pathnidfront);
+        move_uploaded_file($nidBackTemp, $pathnidback);
+        move_uploaded_file($pictureTemp, $pathpicture);
 
-    // Session Variables
-    $_SESSION['tenantName'] = $_POST['tenantName'];
-    $_SESSION['fName'] = $_POST['fatherName'];
-    $_SESSION['tenantEmail'] = $_POST['tenantEmail'];
-    $_SESSION['tenantContact'] = $_POST['tenantContact'];
-    $_SESSION['pAdd'] = $_POST['prmntadr'];
-    $_SESSION['vill'] = $_POST['village'];
-    $_SESSION['po'] = $_POST['po'];
-    $_SESSION['ps'] = $_POST['ps'];
-    $_SESSION['district'] = $_POST['district'];
-    $_SESSION['monRent'] = $_POST['monRent'];
-    $_SESSION['monRentWords'] = convertNumber($_POST['monRent']);
-    $_SESSION['startDate'] = $_POST['startDate'];
-    $_SESSION['nidno'] = $_POST['nidno'];
-    $_SESSION['apartment'] = $floor . $side;
-    $_SESSION['picture'] = '/ams/users/tenants/tenantsNID/' . $picture;
+        $sql = "INSERT IGNORE INTO 
+        tenant (tenantName, apartmentName, tenantContact, monRent, tenantStart, tenantEmail, nidFrontDir, nidBackDir, profilepic, building, fatherName, 	pAddress, po, ps, district, village, nidNumber) 
+        VALUES ('$tenantName', '$apartment', '$tenantContact', '$monRent', '$startDate','$tenantEmail', '$nidFrontDir', '$nidBackDir', '$pictureDir', '$selectBuilding', '$fName', '$pAdd', '$po', '$ps', '$district', '$vill', '$nidno')";
 
-    echo "<script>
+        $mysqli->query($sql) or die($mysqli->error);
+
+
+        // Session Variables
+        $_SESSION['tenantName'] = $_POST['tenantName'];
+        $_SESSION['fName'] = $_POST['fatherName'];
+        $_SESSION['tenantEmail'] = $_POST['tenantEmail'];
+        $_SESSION['tenantContact'] = $_POST['tenantContact'];
+        $_SESSION['pAdd'] = $_POST['prmntadr'];
+        $_SESSION['vill'] = $_POST['village'];
+        $_SESSION['po'] = $_POST['po'];
+        $_SESSION['ps'] = $_POST['ps'];
+        $_SESSION['district'] = $_POST['district'];
+        $_SESSION['monRent'] = $_POST['monRent'];
+        $_SESSION['monRentWords'] = convertNumber($_POST['monRent']);
+        $_SESSION['startDate'] = $_POST['startDate'];
+        $_SESSION['nidno'] = $_POST['nidno'];
+        $_SESSION['apartment'] = $floor . $side;
+        $_SESSION['picture'] = '/ams/users/tenants/tenantsNID/' . $picture;
+
+        echo "<script>
     alert('New tenant added succesfully');
-    window.location='/ams/modal-for-tenant.php';
+    window.location='/ams/add-tenant.php';
     </script>";
+    } else {
+        echo "<script>
+        alert('Add this apartment first');
+        window.location='/ams/add-apt.php';
+        </script>";
+    }
 }
 ?>
 <?php
