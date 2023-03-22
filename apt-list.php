@@ -21,7 +21,7 @@ include ROOT . '/includes/sidebar.php'; ?>
 //     }
 // }
     
-    $sqlformonth = "SELECT * FROM $apartment ORDER BY apartmentName DESC";
+    $sqlformonth = "SELECT * FROM $apartment ORDER BY aptOwner ASC";
     $resultformonth = mysqli_query($mysqli, $sqlformonth) or die(mysqli_error($mysqli));
     ?>
 
@@ -36,9 +36,9 @@ include ROOT . '/includes/sidebar.php'; ?>
                                     <tr>
                                         <th>Apartment</th>
                                         <th>Owner</th>
-                                        <th>Tenant</th>
                                         <th>Building</th>
                                         <th>Monthly Fair</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,13 +52,20 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 <?= $dataformonth['aptOwner'] ?>
                                             </td>
                                             <td>
-                                                <?= $dataformonth['TenantName'] ?>
-                                            </td>
-                                            <td>
                                                 <?= $dataformonth['building'] ?>
                                             </td>
                                             <td>
                                                 <?= $dataformonth['aptFair'] ?>
+                                            </td>
+                                            <td>
+                                                <div style="display:flex; gap:5px;">
+                                                    <!-- <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                        onclick="window.location='/ams/edit-apt.php?apt=<?= $dataformonth['apartmentName'] ?>';"><i
+                                                            class="fa fa-edit"></i></button> -->
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        onclick="window.location='/ams/del-apt.php?apt=<?= $dataformonth['apartmentName'] ?>';"><i
+                                                            class="fa fa-ban"></i></button>
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php } ?>

@@ -10,7 +10,7 @@ include ROOT . '/includes/db-config.php';
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">Manager Login</div>
+                        <div class="card-header">Admin Login</div>
                         <div class="card-body card-block">
                             <form action="#" method="post">
                                 <div class="form-group">
@@ -18,7 +18,7 @@ include ROOT . '/includes/db-config.php';
                                         <div class="input-group-addon">
                                             <i class="fa fa-envelope"></i>
                                         </div>
-                                        <input type="email" id="email" name="useremail" placeholder="Manager Email"
+                                        <input type="email" id="email" name="useremail" placeholder="Admin Email"
                                             class="form-control">
                                     </div>
                                 </div>
@@ -28,11 +28,11 @@ include ROOT . '/includes/db-config.php';
                                             <i class="fa fa-asterisk"></i>
                                         </div>
                                         <input type="password" id="password" name="userpassword"
-                                            placeholder="Manager Password" class="form-control">
+                                            placeholder="Admin Password" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-actions form-group">
-                                    <input type="submit" name="loginBtn" value="Login" class="btn btn-success btn-sm">
+                                    <input type="submit" value="Login" name="loginBtn" class="btn btn-success btn-sm">
                                 </div>
                             </form>
                         </div>
@@ -45,25 +45,26 @@ include ROOT . '/includes/db-config.php';
 
 <?php
 if (isset($_POST['loginBtn'])) {
-    $useremail = $_POST['useremail'];
-    $userpassword = $_POST['userpassword'];
 
-    $sql = "SELECT * FROM $manager WHERE managerEmail = '$useremail' AND managerPass = '$userpassword'";
+    $useremail = $_POST['useremail'];
+    $userpassword = md5($_POST['userpassword']);
+
+    $sql = "SELECT * FROM $admin WHERE adminEmail = '$useremail' AND adminPass = '$userpassword'";
 
     $result = mysqli_query($mysqli, $sql) or die(mysqli_error($mysqli));
     $numrows = mysqli_num_rows($result);
 
     if ($numrows == 0) {
         echo "<script>
-        alert('Wrong email or password');
-        window.location='/ams/manager-login.php';
-        </script>";
+            alert('Wrong email or password');
+            window.location='/ams/admin-login.php';
+            </script>";
     } else {
 
         $data = $result->fetch_assoc();
 
-        $_SESSION['username'] = $data['managerName'];
-        $_SESSION['usertype'] = "manager";
+        $_SESSION['username'] = $data['adminName'];
+        $_SESSION['usertype'] = "admin";
         echo "<script>window.location='/ams/dashboard.php'</script>";
     }
 }

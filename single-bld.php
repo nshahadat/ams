@@ -33,6 +33,11 @@ include ROOT . '/includes/sidebar.php'; ?>
                             $sqlforb01 = "SELECT * FROM $tenant WHERE building = '$bld'";
                             $resultforb01 = mysqli_query($mysqli, $sqlforb01) or die(mysqli_error($mysqli));
                             echo $bld ?>
+                            <div>
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                    onclick="window.location='/ams/del-bld.php?bld=<?= $bld ?>';"><i
+                                        class="fa fa-ban"></i></button>
+                            </div>
                         </h2>
                         <div class="table-responsive m-b-40">
                             <table class="table table-borderless table-data3">

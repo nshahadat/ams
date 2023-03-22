@@ -4,12 +4,9 @@ error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 
-$bld = $_GET['bld'];
 $flr = $_GET['flr'];
-$side = $_GET['side'];
-$apartment = "B" . $bld . "AP" . $flr . $side;
 
-$sqlfordue = "SELECT * FROM $dues WHERE dueApt = '$apartment'";
+$sqlfordue = "SELECT * FROM $dues WHERE dueApt = '$flr'";
 $resultfordue = mysqli_query($mysqli, $sqlfordue) or die(mysqli_error($mysqli));
 $datafordue = $resultfordue->fetch_assoc();
 

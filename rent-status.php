@@ -25,6 +25,9 @@ include ROOT . '/includes/sidebar.php'; ?>
     $due = "Due";
     $sqlfordue = "SELECT tenant.apartmentName, tenant.building, tenant.tenantName, tenant.lastPaid, IF(STRCMP(tenant.lastPaid, MONTHNAME(CURRENT_DATE))=0,'$paid','$due') AS rentStatus FROM $tenant";
     $resultfordue = mysqli_query($mysqli, $sqlfordue) or die(mysqli_error($mysqli));
+
+    $fetchbldsql = "SELECT * FROM $building";
+    $resultbld = mysqli_query($mysqli, $fetchbldsql) or die(mysqli_error($mysqli));
     ?>
 
     <div class="main-content">
@@ -47,8 +50,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         <tr>
                                             <td>
                                                 <a class="custom__a"
-                                                    href="/ams/apt-payment-details.php?apt=<?= $datafordue['apartmentName'] ?>"><?=
-                                                          $datafordue['apartmentName'] ?>
+                                                    href="/ams/apt-payment-details.php?apt=<?= $datafordue['apartmentName'] ?>"><?= $datafordue['apartmentName'] ?>
                                             </td>
                                             <td>
                                                 <?= $datafordue['building'] ?>

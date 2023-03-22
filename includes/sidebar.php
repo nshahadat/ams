@@ -47,9 +47,6 @@
                         <li>
                             <a href="/ams/tenants-list.php">Tenant List</a>
                         </li>
-                        <li>
-                            <a href="/ams/rent-collect.php">Collect Rent</a>
-                        </li>
                     </ul>
                 </li>
                 <li class="has-sub">
@@ -70,9 +67,20 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="/ams/rent-status.php">
-                        <i class="fas  fa-bar-chart-o"></i>Rent Status</a>
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas  fa-bar-chart-o"></i>Rent</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a href="/ams/rent-status.php">Rent Status</a>
+                        </li>
+                        <li>
+                            <a href="/ams/rent-collect.php">Collect Rent</a>
+                        </li>
+                        <li>
+                            <a href="/ams/invoices.php">Invoices</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="/ams/check-complain.php">

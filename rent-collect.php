@@ -35,6 +35,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <select name="whichbuilding" id="selectbld" class="form-control">
+                                                <option disabled selected>Choose</option>
                                                 <?php while ($databld = $resultbld->fetch_assoc()) { ?>
                                                     <option value="<?= $databld['buildingName'] ?>">
                                                         <?= $databld['buildingName'] ?>
@@ -43,43 +44,10 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Floor</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="whichfloor" id="selectflr" class="form-control">
-                                                <?php for ($af = 0; $af < 15; $af++) { ?>
-                                                    <option value="<?= $af ?>">
-                                                        <?= $af ?>
-                                                    </option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Side</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="whichwing" id="selectside" class="form-control">
-                                                <?php for ($cnt = 1; $cnt < 2; $cnt++) {
-                                                    foreach (range('A', 'Z') as $sideapt) { ?>
-                                                        <option value="<?= $sideapt ?>">
-                                                            <?= $sideapt ?>
-                                                        </option>
-                                                    <?php }
-                                                } ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <div id="apted"></div>
                                     <div id="pred"></div>
                                     <div class="row form-group" id="due">
                                         <div class="col col-md-3"></div>
-                                        <div class="col-12 col-md-9">
-                                            <button type="button" id="duebtn" class="btn btn-danger btn-sm">Show
-                                                Dues</button>
-                                        </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
@@ -202,27 +170,29 @@ include ROOT . '/includes/sidebar.php'; ?>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        var selectedBld = 'Labbo';
-        var selectedFlr = 0;
-        var selectedSide = 'A';
+        var selectedBld = '';
+        var selectedFlr = '';
 
         $("#selectbld").change(function () {
             selectedBld = $(this).val();
-            console.log(selectedBld)
+            console.log(selectedBld);
+
+            $.ajax({
+                method: "GET",
+                url: "/ams/rent-show-apt.php",
+                data: "bld=" + selectedBld,
+                success: function (response) {
+                    $("#apted").html(response);
+                }
+            })
         });
-        $("#selectflr").change(function () {
+        $("#info-form").on('change', '#selectflr', function () {
             selectedFlr = $(this).val();
-            console.log(selectedFlr)
-        });
-        $("#selectside").change(function () {
-            selectedSide = $(this).val();
-            console.log(selectedSide)
-        });
-        $("#duebtn").click(function () {
+            console.log(selectedFlr);
             $.ajax({
                 method: "GET",
                 url: "/ams/dues-backend.php",
-                data: "bld=" + selectedBld + "&flr=" + selectedFlr + "&side=" + selectedSide,
+                data: "flr=" + selectedFlr,
                 success: function (response) {
                     $("#pred").html(response);
                 }
@@ -259,8 +229,6 @@ include ROOT . '/includes/sidebar.php'; ?>
 if (isset($_POST['collectBtn'])) {
     $selectBuilding = $_POST['whichbuilding'];
     $floor = $_POST['whichfloor'];
-    $side = $_POST['whichwing'];
-    $apartment = "B" . $selectBuilding . "AP" . $floor . $side;
     $month = $_POST['paymentmonth'];
     $receivedfrom = $_POST['receivedfrom'];
     $amount = $_POST['amount'];
@@ -270,7 +238,7 @@ if (isset($_POST['collectBtn'])) {
     $monthlyrent = $_POST['monthlyrent'];
     $rentdate = date("Y-m-d");
 
-    $aptcheck = "SELECT * FROM apartment WHERE apartmentName = '$apartment'";
+    $aptcheck = "SELECT * FROM apartment WHERE apartmentName = '$floor'";
     $result = $mysqli->query($aptcheck) or die($mysqli->error);
     $numrows = mysqli_num_rows($result);
 
@@ -299,6 +267,14 @@ if (isset($_POST['collectBtn'])) {
         $_SESSION['rentdue'] = $_SESSION['prevdues'];
         $_SESSION['monthlyrent'] = $monthlyrent;
         $_SESSION['newdue'] = $dueupdate;
+        $rentdue = $_SESSION['rentdue'];
+        $year = date("Y");
+        $totalrec = $_SESSION['totalrec'];
+
+        $invoicesql = "INSERT IGNORE INTO 
+        invoice(month, receivedFrom, amount, gasBill, elcBill, otherBill, rentDue, monthlyRent, newDue, year, apartment, total)
+        VALUES('$month', '$receivedfrom', '$amount', '$gasbill', '$elcbill', '$otherbill', '$rentdue', '$monthlyrent', '$dueupdate', '$year', '$floor', '$totalrec')";
+        mysqli_query($mysqli, $invoicesql) or die(mysqli_error($mysqli));
 
         include ROOT . '/modal.php';
 

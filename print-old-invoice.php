@@ -2,13 +2,22 @@
 session_start();
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/header.php';
+include ROOT . '/includes/db-config.php';
+
+$apt = $_SESSION['apt'];
+$month = $_SESSION['month'];
+$year = $_SESSION['year'];
+
+$invoicesql = "SELECT * FROM invoice WHERE apartment = '$apt' AND month = '$month' AND year = '$year'";
+$invoiceresult = mysqli_query($mysqli, $invoicesql) or die(mysqli_error($mysqli));
+$invoicedata = mysqli_fetch_assoc($invoiceresult);
 ?>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 
 <body onload="window.print()">
-    <div class="min-h-[85vh]">
+    <div class="min-h-screen">
         <div class="flex flex-col justify-start items-center">
             <p class="p-2">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
             <p class="rounded-full bg-black text-white p-2">ঘর ভাড়ার রশিদ</p>
@@ -17,12 +26,12 @@ include ROOT . '/includes/header.php';
             </p>
             <div class="flex justify-evenly items-center w-[60vw]">
                 <p>ফ্ল্যাট নং: <span>
-                        <?= $_SESSION['apartment'] ?>
+                        <?= $_SESSION['apt'] ?>
                     </span></p>
                 <p>চলতি মাস: <span>
                         <?= $_SESSION['month'] ?>
                     </span> সাল:
-                    <?= date("Y") ?>
+                    <?= $_SESSION['year'] ?>
                 </p>
             </div>
             <p class="float-left w-[60vw] pt-11">বিবরণ: </p>
@@ -30,7 +39,7 @@ include ROOT . '/includes/header.php';
                 <div class="flex w-[100%]">
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black">মাসিক ভাড়া :</p>
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black"><span><u>
-                                <?= $_SESSION['monthlyrent'] ?>
+                                <?= $invoicedata['monthlyRent'] ?>
                             </u>
                             &#2547;</span></p>
                 </div>
@@ -43,13 +52,13 @@ include ROOT . '/includes/header.php';
                     </p>
                     <p class="w-[50%] h-[100%] flex flex-col justify-center items-center border border-black">
                         <span><u>
-                                <?= $_SESSION['gasbill'] ?>
+                                <?= $invoicedata['gasBill'] ?>
                             </u> &#2547;</span>
                         <span><u>
-                                <?= $_SESSION['elcbill'] ?>
+                                <?= $invoicedata['elcBill'] ?>
                             </u> &#2547;</span>
                         <span><u>
-                                <?= $_SESSION['otherbill'] ?>
+                                <?= $invoicedata['otherBill'] ?>
                             </u> &#2547;</span>
                     </p>
                 </div>
@@ -59,28 +68,28 @@ include ROOT . '/includes/header.php';
                         <span>মন্তব্য:</span>
                     </p>
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black"><span><u>
-                                <?= $_SESSION['prevdues'] ?>
+                                <?= $invoicedata['rentDue'] ?>
                             </u>
                             &#2547;</span></p>
                 </div>
                 <div class="flex w-[100%] h-[10%] pt-2">
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black">সর্বমোট প্রদেয়:</p>
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black"><span><u>
-                                <?= $_SESSION['totalrec'] ?>
+                                <?= $invoicedata['total'] ?>
                             </u>
                             &#2547;</span></p>
                 </div>
                 <div class="flex w-[100%] h-[10%] pt-2">
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black">আদায়:</p>
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black"><span><u>
-                                <?= $_SESSION['amount'] ?>
+                                <?= $invoicedata['amount'] ?>
                             </u>
                             &#2547;</span></p>
                 </div>
                 <div class="flex w-[100%] h-[10%]">
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black">বকেয়া:</p>
                     <p class="w-[50%] p-2 flex justify-center items-center border border-black"><span><u>
-                                <?= $_SESSION['newdue'] ?>
+                                <?= $invoicedata['newDue'] ?>
                             </u>
                             &#2547;</span></p>
                 </div>
@@ -102,7 +111,7 @@ include ROOT . '/includes/header.php';
                         class="pr-2">মন্তব্য:</span><span>...........................................................................................................................................</span>
                 </p>
             </div>
-            <p class="mt-12 rounded-full border border-black"><i>বি: দ্রঃ চলতি মাসের ১০ তারিখের ভিতর ভাড়া পরিশোধ
+            <p class="mt-4 p-2 rounded-full border border-black"><i>বি: দ্রঃ চলতি মাসের ১০ তারিখের ভিতর ভাড়া পরিশোধ
                     করুন।
                     ধন্যবাদ </i></p>
         </div>
