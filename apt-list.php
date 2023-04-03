@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+// error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -21,58 +21,75 @@ include ROOT . '/includes/sidebar.php'; ?>
 //     }
 // }
     
-    $sqlformonth = "SELECT * FROM $apartment ORDER BY aptOwner ASC";
-    $resultformonth = mysqli_query($mysqli, $sqlformonth) or die(mysqli_error($mysqli));
+    $sqlforbld = "SELECT buildingName FROM $building";
+    $resultforbld = mysqli_query($mysqli, $sqlforbld) or die(mysqli_error($mysqli));
     ?>
 
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="table-responsive table--no-card m-b-30">
-                            <table class="table table-borderless table-striped table-earning">
-                                <thead>
-                                    <tr>
-                                        <th>Apartment</th>
-                                        <th>Owner</th>
-                                        <th>Building</th>
-                                        <th>Monthly Fair</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php while ($dataformonth = $resultformonth->fetch_assoc()) { ?>
+                    <?php
+                    while ($dataforbld = $resultforbld->fetch_assoc()) {
+                        $dtfbld = $dataforbld['buildingName'];
+                        $sqlforb01 = "SELECT * FROM $apartment WHERE building = '$dtfbld'";
+                        $resultforb01 = mysqli_query($mysqli, $sqlforb01) or die(mysqli_error($mysqli));
+                        ?>
+                        <div class="col-lg-12">
+                            <h2 class="building__header">
+                                <a class="custom__a" href="/ams/single-bld.php?bld=<?= $dataforbld['buildingName'] ?>
+                                "><?= $dataforbld['buildingName'] ?></a>
+                            </h2>
+                            <div class="table-responsive m-b-40">
+                                <table class="table table-borderless table-data3">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <a class="custom__a"
-                                                    href="/ams/apt-payment-details.php?apt=<?= $dataformonth['apartmentName'] ?>"><?= $dataformonth['apartmentName'] ?></a>
-                                            </td>
-                                            <td>
-                                                <?= $dataformonth['aptOwner'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $dataformonth['building'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $dataformonth['aptFair'] ?>
-                                            </td>
-                                            <td>
-                                                <div style="display:flex; gap:5px;">
-                                                    <!-- <button type="button" class="btn btn-outline-secondary btn-sm"
-                                                        onclick="window.location='/ams/edit-apt.php?apt=<?= $dataformonth['apartmentName'] ?>';"><i
-                                                            class="fa fa-edit"></i></button> -->
-                                                    <button type="button" class="btn btn-outline-primary btn-sm"
-                                                        onclick="window.location='/ams/del-apt.php?apt=<?= $dataformonth['apartmentName'] ?>';"><i
-                                                            class="fa fa-ban"></i></button>
-                                                </div>
-                                            </td>
+                                            <th>Apartment Name</th>
+                                            <th>Apartment Owner</th>
+                                            <th>Apartment Rent</th>
+                                            <th>Rented</th>
+                                            <th>Actions</th>
                                         </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php while ($dataforb01 = $resultforb01->fetch_assoc()) {
+                                            $ct = $dataforb01['apartmentName'];
+                                            $checktenant = "SELECT * FROM $tenant WHERE apartmentName = '$ct'";
+                                            $checktenantrun = mysqli_query($mysqli, $checktenant) or die(mysqli_error($mysqli));
+                                            $numoforws = mysqli_num_rows($checktenantrun);
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <?= $dataforb01['apartmentName'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $dataforb01['aptOwner'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $dataforb01['aptFair'] ?>
+                                                </td>
+                                                <td>
+                                                    <?php if ($numoforws > 0) { ?>
+                                                        Yes
+                                                    <?php } else { ?>
+                                                        No
+                                                    <?php } ?>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button type="button" class="btn btn-outline-success btn-sm"
+                                                            onclick="window.location='/ams/edit-apt.php?apt=<?= $dataformonth['apartmentName'] ?>';">Edit</button>
+                                                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                                            onclick="window.location='/ams/del-apt.php?apt=<?= $dataforb01['apartmentName'] ?>';">Delete</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>

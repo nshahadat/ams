@@ -44,6 +44,16 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <small class="form-text text-muted">Address of the building</small>
                                         </div>
                                     </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label for="text-input" class=" form-control-label">How many stories are
+                                                there in the building</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <input type="number" id="text-input" name="buildingstor"
+                                                placeholder="Input the number" class="form-control" required>
+                                        </div>
+                                    </div>
                                     <div class="card-footer">
                                         <input type="submit" name="addBld" value="Add" class="btn btn-primary btn-sm">
                                         <button type="reset" class="btn btn-danger btn-sm"
@@ -60,14 +70,25 @@ include ROOT . '/includes/sidebar.php'; ?>
 </div>
 
 <?php
-if (isset($_POST['addBld'])) {
 
+if (isset($_POST['addBld'])) {
     $bldName = $_POST['buildingName'];
     $bldLoc = $_POST['buildingLoc'];
+    $bldStor = $_POST['buildingstor'];
 
-    $addbldsql = "INSERT IGNORE INTO $building(buildingName, buildingLoc) VALUES('$bldName', '$bldLoc')";
-    $mysqli->query($addbldsql) or die($mysqli->error);
-    echo "<script>alert('Building added succesfully')</script>";
+    $checkbld = "SELECT * FROM $building WHERE buildingName = '$bldName'";
+    $checkbldrun = mysqli_query($mysqli, $checkbld) or die(mysqli_error($mysqli));
+    $checkdata = mysqli_num_rows($checkbldrun);
+
+    if ($checkdata >= 1) {
+        echo "<script>alert('Building already exist.')
+        window.location = '/ams/add-building.php'</script>";
+    } else {
+        $addbldsql = "INSERT IGNORE INTO $building(buildingName, buildingLoc, buildingStor) VALUES('$bldName', '$bldLoc', '$bldStor')";
+        $mysqli->query($addbldsql) or die($mysqli->error);
+        echo "<script>alert('Building added succesfully')
+        window.location = '/ams/add-building.php'</script>";
+    }
 }
 ?>
 

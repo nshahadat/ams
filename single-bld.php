@@ -28,51 +28,65 @@ include ROOT . '/includes/sidebar.php'; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="building__header">
-                            <?php
-                            $sqlforb01 = "SELECT * FROM $tenant WHERE building = '$bld'";
-                            $resultforb01 = mysqli_query($mysqli, $sqlforb01) or die(mysqli_error($mysqli));
-                            echo $bld ?>
+                        <div class="building__header">
+                            <h2>
+                                <?php
+                                $sqlforb01 = "SELECT * FROM apartment WHERE building = '$bld'";
+                                $resultforb01 = mysqli_query($mysqli, $sqlforb01) or die(mysqli_error($mysqli));
+
+                                $checkbld = "SELECT * FROM $building WHERE buildingName = '$bld'";
+                                $checkbldrun = mysqli_query($mysqli, $checkbld) or die(mysqli_error($mysqli));
+                                $checkdata = mysqli_fetch_assoc($checkbldrun);
+                                echo $bld ?>
+                            </h2>
                             <div>
-                                <button type="button" class="btn btn-outline-primary btn-sm"
-                                    onclick="window.location='/ams/del-bld.php?bld=<?= $bld ?>';"><i
-                                        class="fa fa-ban"></i></button>
+                                <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="window.location='/ams/del-bld.php?bld=<?= $bld ?>';">Delete</button>
                             </div>
-                        </h2>
+                        </div>
+                        <h4 style="padding-bottom: 2vh;">
+                            Location:
+                            <?= $checkdata['buildingLoc']; ?> ,
+                            <?= $checkdata['buildingStor']; ?> storied building
+                        </h4>
                         <div class="table-responsive m-b-40">
                             <table class="table table-borderless table-data3">
                                 <thead>
                                     <tr>
                                         <th>Apartment Name</th>
+                                        <th>Apartment Owner</th>
                                         <th>Tenant Name</th>
-                                        <th>Tenant Contact</th>
-                                        <th>Start Date</th>
-                                        <th>Tenant Email</th>
-                                        <th>Last Paid Month</th>
+                                        <th>Apartment Rent</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php while ($dataforb01 = $resultforb01->fetch_assoc()) { ?>
+                                    <?php while ($dataforb01 = $resultforb01->fetch_assoc()) {
+                                        $chk = $dataforb01['apartmentName'];
+                                        $chksql = "SELECT * FROM $tenant WHERE apartmentName = '$chk'";
+                                        $chkrun = mysqli_query($mysqli, $chksql) or die(mysqli_error($mysqli));
+                                        $chkrow = mysqli_num_rows($chkrun);
+                                        $chkdata = mysqli_fetch_assoc($chkrun);
+                                        ?>
                                         <tr>
                                             <td>
                                                 <?= $dataforb01['apartmentName'] ?>
                                             </td>
                                             <td>
-                                                <a href="/ams/user-details.php?user=<?= $datafortenant['tenantName'] ?>"
-                                                    class="custom__a">
-                                                    <?= $dataforb01['tenantName'] ?></a>
+                                                <?= $dataforb01['aptOwner'] ?>
                                             </td>
                                             <td>
-                                                <?= $dataforb01['tenantContact'] ?>
+                                                <?php if ($chkrow > 0) {
+                                                    $tid = $chkdata['tenantID'];
+                                                    ?>
+                                                    <a href="/ams/user-details.php?user=<?= $tid ?>" class="custom__a">
+                                                        <?= $chkdata['tenantName']; ?>
+                                                    </a>
+                                                <?php } else {
+                                                    echo "Not Rented Yet";
+                                                } ?>
                                             </td>
                                             <td>
-                                                <?= $dataforb01['tenantStart'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $dataforb01['tenantEmail'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $dataforb01['lastPaid'] ?>
+                                                <?= $dataforb01['aptFair'] ?>
                                             </td>
                                         </tr>
                                     <?php } ?>

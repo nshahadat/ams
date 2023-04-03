@@ -129,6 +129,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         </div>
                                     </div>
                                     <div class="row form-group">
+                                        <!-- Apartment select hole jquery diye oi apt er monthly fair check kore show korate hobe -->
                                         <div class="col col-md-3">
                                             <label for="email-input" class=" form-control-label">Monthly Rent</label>
                                         </div>
@@ -162,6 +163,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </select>
                                         </div>
                                     </div>
+                                    <!-- Building select korar por auto blank apartment list gulo ashbe -->
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="select" class=" form-control-label">Select Floor</label>
@@ -259,7 +261,7 @@ if (isset($_POST['submitBtn'])) {
     $po = $_POST['po'];
     $ps = $_POST['ps'];
     $district = $_POST['district'];
-    $monRent = $_POST['monRent'];
+    // $monRent = $_POST['monRent'];
     $startDate = $_POST['startDate'];
     $selectBuilding = $_POST['whichbuilding'];
     $floor = $_POST['whichfloor'];
@@ -280,7 +282,7 @@ if (isset($_POST['submitBtn'])) {
     $pathpicture = ROOT . '/users/tenants/tenantsNID/' . $picture;
 
     $updateapt = "UPDATE apartment SET 
-    TenantName = '$tenantName',
+    tenantName = '$tenantName',
     aptFair = '$monRent'
     WHERE apartmentName = '$apartment'";
 
@@ -307,7 +309,7 @@ if (isset($_POST['submitBtn'])) {
         $_SESSION['po'] = $_POST['po'];
         $_SESSION['ps'] = $_POST['ps'];
         $_SESSION['district'] = $_POST['district'];
-        $_SESSION['monRent'] = $_POST['monRent'];
+        // $_SESSION['monRent'] = $_POST['monRent'];
         $_SESSION['monRentWords'] = convertNumber($_POST['monRent']);
         $_SESSION['startDate'] = $_POST['startDate'];
         $_SESSION['nidno'] = $_POST['nidno'];

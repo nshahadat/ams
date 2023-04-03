@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+// error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -32,24 +32,21 @@ include ROOT . '/includes/sidebar.php'; ?>
                     <?php
                     while ($dataforbld = $resultforbld->fetch_assoc()) {
                         $dtfbld = $dataforbld['buildingName'];
-                        $sqlforb01 = "SELECT * FROM $tenant WHERE building = '$dtfbld'";
+                        $sqlforb01 = "SELECT * FROM $apartment WHERE building = '$dtfbld'";
                         $resultforb01 = mysqli_query($mysqli, $sqlforb01) or die(mysqli_error($mysqli));
                         ?>
                         <div class="col-lg-12">
                             <h2 class="building__header">
                                 <a class="custom__a" href="/ams/single-bld.php?bld=<?= $dataforbld['buildingName'] ?>
-                                "><?=$dataforbld['buildingName'] ?></a>
+                                "><?= $dataforbld['buildingName'] ?></a>
                             </h2>
                             <div class="table-responsive m-b-40">
                                 <table class="table table-borderless table-data3">
                                     <thead>
                                         <tr>
                                             <th>Apartment Name</th>
-                                            <th>Tenant Name</th>
-                                            <th>Tenant Contact</th>
-                                            <th>Start Date</th>
-                                            <th>Tenant Email</th>
-                                            <th>Last Paid Month</th>
+                                            <th>Apartment Owner</th>
+                                            <th>Apartment Rent</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -59,20 +56,10 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                     <?= $dataforb01['apartmentName'] ?>
                                                 </td>
                                                 <td>
-                                                    <a class="custom__a"
-                                                        href="/ams/user-details.php?user=<?= $dataforb01['tenantName'] ?>"><?=$dataforb01['tenantName'] ?></a>
+                                                    <?= $dataforb01['aptOwner'] ?>
                                                 </td>
                                                 <td>
-                                                    <?= $dataforb01['tenantContact'] ?>
-                                                </td>
-                                                <td>
-                                                    <?= $dataforb01['tenantStart'] ?>
-                                                </td>
-                                                <td>
-                                                    <?= $dataforb01['tenantEmail'] ?>
-                                                </td>
-                                                <td>
-                                                    <?= $dataforb01['lastPaid'] ?>
+                                                    <?= $dataforb01['aptFair'] ?>
                                                 </td>
                                             </tr>
                                         <?php } ?>

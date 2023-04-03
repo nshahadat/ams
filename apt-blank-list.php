@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+// error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -21,7 +21,7 @@ include ROOT . '/includes/sidebar.php'; ?>
 //     }
 // }
     
-    $sqlformonth = "SELECT * FROM $apartment WHERE TenantName IS NULL ORDER BY apartmentName DESC";
+    $sqlformonth = "SELECT * FROM $apartment WHERE tenantName IS NULL ORDER BY apartmentName DESC";
     $resultformonth = mysqli_query($mysqli, $sqlformonth) or die(mysqli_error($mysqli));
     ?>
 

@@ -1,8 +1,13 @@
 <?php
 session_start();
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/header.php';
 include ROOT . '/includes/db-config.php';
+
+if ($_SESSION['username']) {
+    echo "<script>window.location='/ams/dashboard.php';</script>";
+}
 ?>
 <div class="main-content" style="display:flex; justify-content:center; align-items:center;">
     <div class="section__content section__content--p30">

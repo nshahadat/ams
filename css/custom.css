@@ -4,3 +4,8 @@
 .custom__a:hover {
     color: #333333;
 }
+
+.building__header {
+    display: flex;
+    gap: 2vh;
+}
