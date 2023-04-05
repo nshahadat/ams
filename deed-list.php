@@ -48,7 +48,8 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         <th>Tenant Name</th>
                                         <th>Apartment</th>
                                         <th>Building</th>
-                                        <th>Profile</th>
+                                        <th>Show Deed</th>
+                                        <th>Upload</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,9 +68,15 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </td>
                                             <td>
                                                 <a class="custom__a"
-                                                    href="/ams/user-details.php?user=<?= $datafortenant['tenantID'] ?>">
+                                                    href="/ams/view-deed.php?id=<?= $datafortenant['tenantID'] ?>">
                                                     <button type="button"
                                                         class="btn btn-outline-success btn-sm">Show</button></a>
+                                            </td>
+                                            <td>
+                                                <a class="custom__a"
+                                                    href="/ams/add-deed.php?id=<?= $datafortenant['tenantID'] ?>">
+                                                    <button type="button"
+                                                        class="btn btn-outline-info btn-sm">Upload</button></a>
                                             </td>
                                         </tr>
                                     <?php } ?>

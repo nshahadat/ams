@@ -125,7 +125,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                             Recently Paid
                         </h2>
                         <?php
-                        $sqlformonth = "SELECT * FROM $rent ORDER BY rentDate ASC";
+                        $sqlformonth = "SELECT * FROM $rent ORDER BY rentDate DESC";
                         $resultformonth = mysqli_query($mysqli, $sqlformonth) or die(mysqli_error($mysqli));
                         ?>
                         <div class="table-responsive table--no-card m-b-40">

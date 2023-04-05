@@ -82,6 +82,15 @@
                         </li>
                     </ul>
                 </li>
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="zmdi zmdi-file-text"></i>Deed</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a href="/ams/deed-list.php">Deed List</a>
+                        </li>
+                    </ul>
+                </li>
                 <li>
                     <a href="/ams/check-complain.php">
                         <i class="fas fa-check-square"></i>Check Complain</a>
