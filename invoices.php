@@ -186,7 +186,6 @@ include ROOT . '/includes/sidebar.php'; ?>
 
         $("#selectbld").change(function () {
             selectedBld = $(this).val();
-            console.log(selectedBld);
 
             $.ajax({
                 method: "GET",
@@ -199,7 +198,6 @@ include ROOT . '/includes/sidebar.php'; ?>
         });
         $("#info-form").on('change', '#selectflr', function () {
             selectedFlr = $(this).val();
-            console.log(selectedFlr);
         });
     });
 </script>

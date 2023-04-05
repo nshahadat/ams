@@ -62,7 +62,7 @@ if (isset($_POST['loginBtn'])) {
     if ($numrows == 0) {
         echo "<script>
             alert('Wrong email or password');
-            window.location='/ams/admin-login.php';
+            window.location='/ams/admin.php';
             </script>";
     } else {
 

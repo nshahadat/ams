@@ -21,52 +21,66 @@ include ROOT . '/includes/sidebar.php'; ?>
 //     }
 // }
     
-    $sqlformonth = "SELECT * FROM $apartment WHERE tenantName IS NULL ORDER BY apartmentName DESC";
-    $resultformonth = mysqli_query($mysqli, $sqlformonth) or die(mysqli_error($mysqli));
+    $sqlforbld = "SELECT buildingName FROM $building";
+    $resultforbld = mysqli_query($mysqli, $sqlforbld) or die(mysqli_error($mysqli));
     ?>
 
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="table-responsive table--no-card m-b-30">
-                            <table class="table table-borderless table-striped table-earning">
-                                <thead>
-                                    <tr>
-                                        <th>Apartment</th>
-                                        <th>Owner</th>
-                                        <th>Tenant</th>
-                                        <th>Building</th>
-                                        <th>Monthly Fair</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php while ($dataformonth = $resultformonth->fetch_assoc()) { ?>
+                    <?php
+                    while ($dataforbld = $resultforbld->fetch_assoc()) {
+                        $dtfbld = $dataforbld['buildingName'];
+                        $sqlforb01 = "SELECT * FROM $apartment WHERE tenantName IS NULL AND building = '$dtfbld' ORDER BY apartmentName DESC";
+                        $resultforb01 = mysqli_query($mysqli, $sqlforb01) or die(mysqli_error($mysqli));
+                        ?>
+                        <div class="col-lg-12">
+                            <h2 class="building__header">
+                                <a class="custom__a" href="/ams/single-bld.php?bld=<?= $dataforbld['buildingName'] ?>
+                                "><?= $dataforbld['buildingName'] ?></a>
+                            </h2>
+                            <div class="table-responsive m-b-40">
+                                <table class="table table-borderless table-data3">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <a class="custom__a"
-                                                    href="/ams/apt-payment-details.php?apt=<?= $dataformonth['apartmentName'] ?>"><?=
-                                                          $dataformonth['apartmentName'] ?></a>
-                                            </td>
-                                            <td>
-                                                <?= $dataformonth['aptOwner'] ?>
-                                            </td>
-                                            <td>
-                                                Not Rented Yet
-                                            </td>
-                                            <td>
-                                                <?= $dataformonth['building'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $dataformonth['aptFair'] ?>
-                                            </td>
+                                            <th>Apartment Name</th>
+                                            <th>Apartment Owner</th>
+                                            <th>Apartment Rent</th>
+                                            <th>Rented</th>
                                         </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php while ($dataforb01 = $resultforb01->fetch_assoc()) {
+                                            $ct = $dataforb01['apartmentName'];
+                                            $checktenant = "SELECT * FROM $tenant WHERE apartmentName = '$ct'";
+                                            $checktenantrun = mysqli_query($mysqli, $checktenant) or die(mysqli_error($mysqli));
+                                            $numoforws = mysqli_num_rows($checktenantrun);
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <?= $dataforb01['apartmentName'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $dataforb01['aptOwner'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $dataforb01['aptFair'] ?>
+                                                </td>
+                                                <td>
+                                                    <?php if ($numoforws > 0) { ?>
+                                                        Yes
+                                                    <?php } else { ?>
+                                                        No
+                                                    <?php } ?>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>

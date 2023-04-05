@@ -30,14 +30,25 @@ include ROOT . '/includes/sidebar.php'; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-11">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Search Tenants
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="myInput" onkeyup="myFunction()" name="search"
+                                    placeholder="Search..." class="form-control">
+                            </div>
+                        </div>
                         <h2 class="building__header">All the Tenants</h2>
                         <div class="table-responsive table--no-card m-b-30">
-                            <table class="table table-borderless table-striped table-earning">
+                            <table class="table table-borderless table-striped table-earning" id="myTable">
                                 <thead>
                                     <tr>
                                         <th>Tenant Name</th>
                                         <th>Apartment</th>
-                                        <th>Last Paid</th>
+                                        <th>Building</th>
+                                        <th>Profile</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,7 +63,13 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 <?= $datafortenant['apartmentName'] ?>
                                             </td>
                                             <td>
-                                                <?= $datafortenant['lastPaid'] ?>
+                                                <?= $datafortenant['building'] ?>
+                                            </td>
+                                            <td>
+                                                <a class="custom__a"
+                                                    href="/ams/user-details.php?user=<?= $datafortenant['tenantID'] ?>">
+                                                    <button type="button"
+                                                        class="btn btn-outline-success btn-sm">Show</button></a>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -65,7 +82,29 @@ include ROOT . '/includes/sidebar.php'; ?>
         </div>
     </div>
 </div>
+<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
 
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 <?php
 include ROOT . '/includes/footer.php';
 ?>

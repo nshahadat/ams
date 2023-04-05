@@ -154,7 +154,8 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 Apartment</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <select name="whichbuilding" id="select" class="form-control">
+                                            <select name="whichbuilding" id="selectbld" class="form-control">
+                                                <option disabled selected>Choose</option>
                                                 <?php while ($databld = $resultbld->fetch_assoc()) { ?>
                                                     <option value="<?= $databld['buildingName'] ?>">
                                                         <?= $databld['buildingName'] ?>
@@ -164,36 +165,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         </div>
                                     </div>
                                     <!-- Building select korar por auto blank apartment list gulo ashbe -->
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Floor</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="whichfloor" id="select" class="form-control">
-                                                <?php for ($af = 0; $af < 15; $af++) { ?>
-                                                    <option value="<?= $af ?>">
-                                                        <?= $af ?>
-                                                    </option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Side</label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="whichwing" id="select" class="form-control">
-                                                <?php for ($cnt = 1; $cnt < 2; $cnt++) {
-                                                    foreach (range('A', 'Z') as $sideapt) { ?>
-                                                        <option value="<?= $sideapt ?>">
-                                                            <?= $sideapt ?>
-                                                        </option>
-                                                    <?php }
-                                                } ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <div id="blankdBld"></div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="text-input" class=" form-control-label">NID Number</label>
@@ -209,7 +181,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 NID</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="file" id="file-input" name="tenantNIDfront"
+                                            <input type="file" id="file-input" name="tenantNIDfront" accept="image/*"
                                                 class="form-control-file">
                                         </div>
                                     </div>
@@ -219,7 +191,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 NID</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="file" id="file-input" name="tenantNIDback"
+                                            <input type="file" id="file-input" name="tenantNIDback" accept="image/*"
                                                 class="form-control-file">
                                         </div>
                                     </div>
@@ -229,7 +201,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 tenant</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="file" id="file-input" name="tenantpicture"
+                                            <input type="file" id="file-input" name="tenantpicture" accept="image/*"
                                                 class="form-control-file">
                                         </div>
                                     </div>
@@ -250,6 +222,30 @@ include ROOT . '/includes/sidebar.php'; ?>
     </div>
 </div>
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var selectedBld = '';
+        var selectedFlr = '';
+
+        $("#selectbld").change(function () {
+            selectedBld = $(this).val();
+
+            $.ajax({
+                method: "GET",
+                url: "/ams/show-blank-bld.php",
+                data: "bld=" + selectedBld,
+                success: function (response) {
+                    $("#blankdBld").html(response);
+                }
+            })
+        });
+        $("#info-form").on('change', '#selectflr', function () {
+            selectedFlr = $(this).val();
+        });
+    });
+</script>
+
 <?php
 if (isset($_POST['submitBtn'])) {
     $tenantName = $_POST['tenantName'];
@@ -264,10 +260,10 @@ if (isset($_POST['submitBtn'])) {
     // $monRent = $_POST['monRent'];
     $startDate = $_POST['startDate'];
     $selectBuilding = $_POST['whichbuilding'];
-    $floor = $_POST['whichfloor'];
-    $side = $_POST['whichwing'];
+    $apartment = $_POST['whichfloor'];
+    // $side = $_POST['whichwing'];
     $nidno = $_POST['nidno'];
-    $apartment = "B" . $selectBuilding . "AP" . $floor . $side;
+    // $apartment = "B" . $selectBuilding . "AP" . $floor . $side;
     $nidFront = $_FILES['tenantNIDfront']['name'];
     $nidFrontTemp = $_FILES['tenantNIDfront']['tmp_name'];
     $nidFrontDir = '/ams/users/tenants/tenantsNID/' . $nidFront;
