@@ -1,6 +1,6 @@
 <?php
 session_start();
-// error_reporting(0);
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -78,7 +78,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 <td>
                                                     <div>
                                                         <button type="button" class="btn btn-outline-success btn-sm"
-                                                            onclick="window.location='/ams/edit-apt.php?apt=<?= $dataformonth['apartmentName'] ?>';">Edit</button>
+                                                            onclick="window.location='/ams/edit-apt.php?apt=<?= $dataforb01['apartmentName'] ?>';">Edit</button>
                                                         <button type="button" class="btn btn-outline-danger btn-sm"
                                                             onclick="window.location='/ams/del-apt.php?apt=<?= $dataforb01['apartmentName'] ?>';">Delete</button>
                                                     </div>

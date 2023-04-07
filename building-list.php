@@ -1,6 +1,6 @@
 <?php
 session_start();
-// error_reporting(0);
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';

@@ -14,7 +14,7 @@ include ROOT . '/includes/sidebar.php'; ?>
     $fetchbldsql = "SELECT * FROM $building";
     $resultbld = mysqli_query($mysqli, $fetchbldsql) or die(mysqli_error($mysqli));
 
-    $invoicesql = "SELECT * FROM invoice";
+    $invoicesql = "SELECT * FROM invoice ORDER BY invoiceID DESC";
     $invoiceresult = mysqli_query($mysqli, $invoicesql) or die(mysqli_error($mysqli));
     ?>
 
@@ -158,11 +158,11 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <td>
                                                 <div style="display:flex; gap:5px;">
                                                     <button type="button" class="btn btn-outline-primary btn-sm"
-                                                        onclick="window.location='/ams/invoice-print-backend.php?apt=<?= $invoicedata['apartment'] ?>&month=<?= $invoicedata['month'] ?>&year=<?= $invoicedata['year'] ?>';"><i
+                                                        onclick="window.location='/ams/print-old-invoice.php?apt=<?= $invoicedata['apartment'] ?>&month=<?= $invoicedata['month'] ?>&year=<?= $invoicedata['year'] ?>';"><i
                                                             class="fa fa-print"></i></button>
-                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    <!-- <button type="button" class="btn btn-outline-primary btn-sm"
                                                         onclick="window.location='/ams/del-invoice.php?apt=<?= $invoicedata['apartment'] ?>&month=<?= $invoicedata['month'] ?>&year=<?= $invoicedata['year'] ?>';"><i
-                                                            class="fa fa-ban"></i></button>
+                                                            class="fa fa-ban"></i></button> -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -204,12 +204,12 @@ include ROOT . '/includes/sidebar.php'; ?>
 
 <?php
 if (isset($_POST['collectBtn'])) {
-    $_SESSION['apt'] = $_POST['whichfloor'];
-    $_SESSION['month'] = $_POST['paymentmonth'];
-    $_SESSION['year'] = $_POST['paymentyear'];
+    $floor = $_POST['whichfloor'];
+    $month = $_POST['paymentmonth'];
+    $year = $_POST['paymentyear'];
 
     echo "<script>
-    window.location = '/ams/print-old-invoice.php';
+    window.location='/ams/print-old-invoice.php?apt=$floor&month=$month&year=$year';
     </script>";
 }
 ?>

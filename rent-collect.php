@@ -29,9 +29,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                     id="info-form">
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Building of
-                                                the
-                                                Apartment</label>
+                                            <label for="select" class=" form-control-label">Select Building</label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <select name="whichbuilding" id="selectbld" class="form-control">
@@ -80,7 +78,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <small class="form-text text-muted">Person who is giving the rent</small>
                                         </div>
                                     </div>
-                                    <div class="row form-group">
+                                    <!-- <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="text-input" class="form-control-label">Monthly Rent</label>
                                         </div>
@@ -89,7 +87,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 placeholder="Monthly Rent for this apartment" class="form-control"
                                                 required>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="text-input" class="form-control-label">Gas Bill</label>
@@ -200,7 +198,8 @@ include ROOT . '/includes/sidebar.php'; ?>
         });
         $("#totalbtn").click(function () {
             monthbtn = document.getElementById('monthly');
-            monthvalue = monthbtn.value;
+            monthvalue = monthbtn.placeholder;
+            console.log(monthvalue);
             elcbtn = document.getElementById('elc');
             elcvalue = elcbtn.value;
             gasbtn = document.getElementById('gas');
@@ -235,29 +234,31 @@ if (isset($_POST['collectBtn'])) {
     $gasbill = $_POST['gasbill'];
     $elcbill = $_POST['elcbill'];
     $otherbill = $_POST['otherbill'];
-    $monthlyrent = $_POST['monthlyrent'];
     $rentdate = date("Y-m-d");
 
     $aptcheck = "SELECT * FROM apartment WHERE apartmentName = '$floor'";
     $result = $mysqli->query($aptcheck) or die($mysqli->error);
     $numrows = mysqli_num_rows($result);
+    $aptdata = mysqli_fetch_assoc($result);
+    $monthlyrent = $aptdata['aptFair'];
 
     if ($numrows > 0) {
         $rentsql = "INSERT IGNORE INTO $rent 
         (rentMonth, rentReceived, rentGas, rentCurrent, rentOthers, rentAmount, rentApt, rentDateOnly) 
         VALUES 
-        ('$month', '$receivedfrom', '$gasbill', '$elcbill', '$otherbill', '$amount', '$apartment', '$rentdate')";
+        ('$month', '$receivedfrom', '$gasbill', '$elcbill', '$otherbill', '$amount', '$floor', '$rentdate')";
         $mysqli->query($rentsql) or die($mysqli->error);
 
-        $updatemonth = "UPDATE $tenant SET lastPaid = '$month' WHERE apartmentName = '$apartment'";
+        $updatemonth = "UPDATE $tenant SET lastPaid = '$month' WHERE apartmentName = '$floor'";
         $mysqli->query($updatemonth) or die($mysqli->error);
 
         $dueupdate = $_SESSION['userduepayment'];
-        $updatedue = "UPDATE $dues SET dueAmount = '$dueupdate' WHERE dueApt = '$apartment'";
+        $updatedue = "UPDATE $dues SET dueAmount = '$dueupdate' WHERE dueApt = '$floor'";
         $mysqli->query($updatedue) or die($mysqli->error);
+        echo $updatedue . $dueupdate;
 
         echo "<script>alert('Rent is collected!')</script>";
-        $_SESSION['apartment'] = $apartment;
+        $_SESSION['apartment'] = $floor;
         $_SESSION['month'] = $month;
         $_SESSION['receivedfrom'] = $receivedfrom;
         $_SESSION['amount'] = $amount;

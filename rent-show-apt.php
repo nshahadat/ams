@@ -6,7 +6,7 @@ include ROOT . '/includes/db-config.php';
 
 $bld = $_GET['bld'];
 
-$apt = "SELECT * FROM apartment WHERE building = '$bld'";
+$apt = "SELECT * FROM apartment WHERE building = '$bld' AND tenantName IS NOT NULL";
 $result = mysqli_query($mysqli, $apt) or die(mysqli_error($mysqli));
 
 ?>

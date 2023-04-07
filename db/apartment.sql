@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2023 at 12:11 PM
+-- Generation Time: Apr 07, 2023 at 02:15 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -52,29 +52,21 @@ CREATE TABLE `apartment` (
   `apartmentName` varchar(255) NOT NULL,
   `building` varchar(255) NOT NULL,
   `aptOwner` varchar(255) NOT NULL,
-  `aptFair` int(11) NOT NULL
+  `aptFair` int(11) NOT NULL,
+  `tenantName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `apartment`
 --
 
-INSERT INTO `apartment` (`apartmentID`, `apartmentName`, `building`, `aptOwner`, `aptFair`) VALUES
-(5, 'BLabboAP0A', 'Labbo', 'Khalek', 0),
-(7, 'BHabboAP3J', 'Habbo', 'Malek', 0),
-(8, 'BKabboAP6C', 'Kabbo', 'Khalek', 0),
-(9, 'BLabboAP7F', 'Labbo', 'Bonna', 8989),
-(12, 'BKabboAP14M', 'Kabbo', 'Khalek', 0),
-(13, 'BLabboAP1A', 'Labbo', 'Bonna', 0),
-(14, 'BKabboAP0A', 'Kabbo', 'Khalek', 0),
-(16, 'BKabboAP6N', 'Kabbo', 'Bonna', 0),
-(17, 'BLabboAP6Q', 'Labbo', 'Malek', 0),
-(18, 'BLabboAP0N', 'Labbo', 'Bonna', 0),
-(19, 'BKabboAP0O', 'Kabbo', 'Malek', 0),
-(20, 'BLabboAP11L', 'Labbo', 'Bonna', 0),
-(21, 'BKabboAP9L', 'Kabbo', 'Bonna', 0),
-(22, 'BLabboAP5J', 'Labbo', 'Malek', 0),
-(23, 'BHabboAP5N', 'Habbo', 'Bonna', 0);
+INSERT INTO `apartment` (`apartmentID`, `apartmentName`, `building`, `aptOwner`, `aptFair`, `tenantName`) VALUES
+(1, 'BKabboAP1A', 'Kabbo', 'Malek', 10000, NULL),
+(2, 'BKabboAP2B', 'Kabbo', 'Malek', 12000, NULL),
+(3, 'BLabboAP7A', 'Labbo', 'Bonna', 8000, NULL),
+(4, 'BLabboAP7F', 'Labbo', 'Bonna', 20000, 'Jubayer'),
+(5, 'BPabboAP0D', 'Pabbo', 'Jamir', 13000, NULL),
+(6, 'BPabboAP2C', 'Pabbo', 'Jamir', 8000, NULL);
 
 --
 -- Triggers `apartment`
@@ -93,17 +85,18 @@ DELIMITER ;
 CREATE TABLE `building` (
   `buildingID` int(11) NOT NULL,
   `buildingName` varchar(255) NOT NULL,
-  `buildingLoc` varchar(255) NOT NULL
+  `buildingLoc` varchar(255) NOT NULL,
+  `buildingStor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `building`
 --
 
-INSERT INTO `building` (`buildingID`, `buildingName`, `buildingLoc`) VALUES
-(1, 'Labbo', 'Gulshan-1'),
-(2, 'Kabbo', 'Gulshan-2'),
-(3, 'Habbo', 'Dhanmondi');
+INSERT INTO `building` (`buildingID`, `buildingName`, `buildingLoc`, `buildingStor`) VALUES
+(20, 'Labbo', 'Dhanmondi', 12),
+(21, 'Kabbo', 'Gulshan-1', 10),
+(22, 'Pabbo', 'Mirpur', 22);
 
 -- --------------------------------------------------------
 
@@ -131,6 +124,27 @@ INSERT INTO `complain` (`cmpID`, `cmpEmail`, `cmpDetails`, `cmpApt`, `cmpTime`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `deed`
+--
+
+CREATE TABLE `deed` (
+  `deedID` int(11) NOT NULL,
+  `tenantID` int(11) NOT NULL,
+  `deedPath` varchar(255) NOT NULL,
+  `ext` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `deed`
+--
+
+INSERT INTO `deed` (`deedID`, `tenantID`, `deedPath`, `ext`) VALUES
+(11, 11, '/ams/users/tenants/deed/An online platform for inventors and investors -Formatted Paper.pdf', 'pdf'),
+(12, 11, '/ams/users/tenants/deed/Kazi Nayeem Hossain_page-0001.jpg', 'jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dues`
 --
 
@@ -145,16 +159,12 @@ CREATE TABLE `dues` (
 --
 
 INSERT INTO `dues` (`dueID`, `dueApt`, `dueAmount`) VALUES
-(1, 'BKabboAP0A', 531347),
-(3, 'BKabboAP6N', 0),
-(4, 'BLabboAP6Q', 0),
-(5, 'BLabboAP0N', 0),
-(7, 'BKabboAP0O', 0),
-(8, 'BKabboAP0O', 0),
-(9, 'BLabboAP11L', 0),
-(10, 'BKabboAP9L', 0),
-(11, 'BLabboAP5J', 100),
-(12, 'BHabboAP5N', 0);
+(1, 'BKabboAP1A', 0),
+(2, 'BKabboAP2B', 0),
+(3, 'BLabboAP7A', 0),
+(4, 'BLabboAP7F', 1400),
+(5, 'BPabboAP0D', 0),
+(6, 'BPabboAP2C', 0);
 
 -- --------------------------------------------------------
 
@@ -184,7 +194,12 @@ CREATE TABLE `invoice` (
 
 INSERT INTO `invoice` (`invoiceID`, `month`, `receivedFrom`, `amount`, `gasBill`, `elcBill`, `otherBill`, `rentDue`, `monthlyRent`, `newDue`, `year`, `apartment`, `total`) VALUES
 (3, 'September', 'hy', 5, 697, 5687, 5789, 0, 97, 12265, 2023, 'BKabboAP9L', 12270),
-(4, 'November', 'io', 98, 969, 6986, 986, 0, 986, 9829, 2023, 'BLabboAP0N', 9927);
+(4, 'November', 'io', 98, 969, 6986, 986, 0, 986, 9829, 2023, 'BLabboAP0N', 9927),
+(5, 'January', 'Hakim', 111, 11, 11, 11, 0, 111, 0, 2023, 'BLabboAP1A', 0),
+(6, 'April', 'Karishma', 12, 90, 34, 21, 0, 0, 133, 2023, 'BPabboAP1C', 145),
+(7, 'January', 'Jahir', 23, 23, 23, 23, 0, 879, 925, 2023, 'BHabboAP3J', 948),
+(8, 'April', 'Hakim', 90, 90, 9, 9, 0, 879, 897, 2023, 'BHabboAP3J', 987),
+(9, 'April', 'Karishma', 22000, 900, 1500, 1000, 0, 20000, 1400, 2023, 'BLabboAP7F', 23400);
 
 -- --------------------------------------------------------
 
@@ -255,25 +270,7 @@ CREATE TABLE `rent` (
 --
 
 INSERT INTO `rent` (`rentID`, `rentMonth`, `rentReceived`, `rentGas`, `rentCurrent`, `rentOthers`, `rentAmount`, `rentApt`, `rentDate`, `rentDateOnly`) VALUES
-(2, 'August', 'Hakim', 0, 0, 0, '14000', 'BKabboAP6C', '2023-01-21 10:35:45', ''),
-(3, 'October', 'Hakim', 0, 0, 0, '16000', 'BLabboAP6C', '2023-01-21 10:35:36', ''),
-(4, 'January', 'Jahir', 0, 0, 0, '30000', 'BHabboAP6C', '2023-02-15 18:39:49', ''),
-(5, 'October', 'Karishma', 0, 0, 0, '90000', 'BLabboAP6C', '2023-01-21 10:35:05', ''),
-(6, 'January', 'Labonno', 0, 0, 0, '90000', 'BKabboAP6C', '2023-01-21 09:28:23', ''),
-(7, 'January', 'Labonno', 0, 0, 0, '16000', 'BLabboAP4E', '2023-01-28 05:42:40', ''),
-(12, 'February', 'Labonno', 0, 0, 0, '16000', 'BHabboAP6C', '2023-02-06 19:08:21', ''),
-(13, 'February', 'Hakim', 1200, 3000, 500, '13000', 'BKabboAP5D', '2023-02-11 11:54:15', ''),
-(14, 'January', 'j', 89, 0, 0, '78', 'BLabboAP0A', '2023-02-12 07:26:13', '2023-02-12'),
-(15, 'January', 'l', 7, 0, 9, '87', 'BLabboAP0A', '2023-02-12 07:26:55', '2023-02-12'),
-(16, 'January', 'Jahir', 300, 400, 100, '7000', 'BKabboAP0A', '2023-02-17 19:48:12', '2023-02-17'),
-(17, 'January', 'Jahir', 9786, 876, 90786, '78', 'BKabboAP0A', '2023-02-17 20:44:44', '2023-02-17'),
-(18, 'January', 'Karishma', 400, 300, 2000, '78000', 'BKabboAP0A', '2023-02-17 20:55:16', '2023-02-17'),
-(19, 'January', 'lkjsv', 45345, 44, 453245, '3241', 'BKabboAP0A', '2023-03-18 16:58:17', '2023-03-18'),
-(20, 'January', 'aa', 2, 22, 2, '2', 'BLabboAP0A', '2023-03-22 07:55:57', '2023-03-22'),
-(21, 'January', 'aa', 65, 865, 865, '87', 'apartment', '2023-03-22 09:33:19', '2023-03-22'),
-(22, 'October', 'mm', 6798, 57, 575, '77', 'apartment', '2023-03-22 09:44:54', '2023-03-22'),
-(23, 'September', 'hy', 697, 5687, 5789, '5', 'apartment', '2023-03-22 09:46:40', '2023-03-22'),
-(24, 'November', 'io', 969, 6986, 986, '98', 'apartment', '2023-03-22 11:06:44', '2023-03-22');
+(1, 'April', 'Karishma', 900, 1500, 1000, '22000', 'BLabboAP7F', '2023-04-06 23:32:17', '2023-04-07');
 
 -- --------------------------------------------------------
 
@@ -360,9 +357,7 @@ CREATE TABLE `tenant` (
 --
 
 INSERT INTO `tenant` (`tenantID`, `tenantName`, `fatherName`, `pAddress`, `po`, `ps`, `district`, `village`, `apartmentName`, `building`, `tenantContact`, `monRent`, `tenantStart`, `tenantEmail`, `lastPaid`, `nidNumber`, `nidFrontDir`, `nidBackDir`, `profilepic`) VALUES
-(11, 'Jubayer', '', '', '', '', '', '', 'BHabboAP6C', 'Habbo', '0123456789', 0, '2023-01-13', 'jubayer@example.com', 'February', 0, '/apartment/users/tenants/tenantsNID/davisuko-5E5N49RWtbA-unsplash.jpg', '/apartment/users/tenants/tenantsNID/chris-lawton-5IHz5WhosQE-unsplash.jpg', '/apartment/users/tenants/tenantsNID/user02.jpg'),
-(12, 'Fahim', 'Ahmed Aziz', 'banani', 'idk', 'idk', 'Dhaka', 'idk', 'BLabboAP5E', 'Labbo', '01571364368', 90000, '2023-01-04', 'fahim@example.com', 'January', 999765432, '/apartment/users/tenants/tenantsNID/davisuko-5E5N49RWtbA-unsplash.jpg', '/apartment/users/tenants/tenantsNID/chris-lawton-5IHz5WhosQE-unsplash.jpg', '/apartment/users/tenants/tenantsNID/user02.jpg'),
-(14, 'Shahadat', '', '', '', '', '', '', 'BKabboAP6C', 'Kabbo', '0123456788', 0, '2023-01-01', 'sn23@test.com', 'January', 0, '/apartment/users/tenants/tenantsNID/kkk.png', '/apartment/users/tenants/tenantsNID/kkk.png', '/apartment/users/tenants/tenantsNID/kkk.png');
+(1, 'Jubayer', 'Ahmed', 'Block -F, Road- 06, House-12', 'adada', 'asf', 'Dhaka', 'fefwe', 'BLabboAP7F', 'Labbo', '01571364363', 20000, '2023-04-06', 'shahadatnayeem23@gmail.com', 'April', 999765432, '/ams/users/tenants/tenantsNID/kate-macate-xmddEHyCisc-unsplash.jpg', '/ams/users/tenants/tenantsNID/kate-macate-xmddEHyCisc-unsplash.jpg', '/ams/users/tenants/tenantsNID/alexander-hipp-iEEBWgY_6lA-unsplash.jpg');
 
 --
 -- Indexes for dumped tables
@@ -392,6 +387,12 @@ ALTER TABLE `building`
 --
 ALTER TABLE `complain`
   ADD PRIMARY KEY (`cmpID`);
+
+--
+-- Indexes for table `deed`
+--
+ALTER TABLE `deed`
+  ADD PRIMARY KEY (`deedID`);
 
 --
 -- Indexes for table `dues`
@@ -456,13 +457,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `apartment`
 --
 ALTER TABLE `apartment`
-  MODIFY `apartmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `apartmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `building`
 --
 ALTER TABLE `building`
-  MODIFY `buildingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `buildingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `complain`
@@ -471,16 +472,22 @@ ALTER TABLE `complain`
   MODIFY `cmpID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `deed`
+--
+ALTER TABLE `deed`
+  MODIFY `deedID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `dues`
 --
 ALTER TABLE `dues`
-  MODIFY `dueID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `dueID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `invoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `manager`
@@ -498,7 +505,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `rent`
 --
 ALTER TABLE `rent`
-  MODIFY `rentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `rentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -516,7 +523,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `tenant`
 --
 ALTER TABLE `tenant`
-  MODIFY `tenantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `tenantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

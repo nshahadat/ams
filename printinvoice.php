@@ -1,13 +1,14 @@
 <?php
 session_start();
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
-include ROOT . '/includes/header.php';
+// include ROOT . '/includes/header.php';
 ?>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 
-<body onload="window.print()">
+<body class="bg-white" onload="window.print()">
     <div class="min-h-[85vh]">
         <div class="flex flex-col justify-start items-center">
             <p class="p-2">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
@@ -101,10 +102,9 @@ include ROOT . '/includes/header.php';
                     <span
                         class="pr-2">মন্তব্য:</span><span>...........................................................................................................................................</span>
                 </p>
+                <p class="mt-4 p-2 rounded-full border border-black"><i>বি: দ্রঃ চলতি মাসের ১০ তারিখের ভিতর ভাড়া পরিশোধ
+                        করুন। ধন্যবাদ </i></p>
             </div>
-            <p class="mt-12 rounded-full border border-black"><i>বি: দ্রঃ চলতি মাসের ১০ তারিখের ভিতর ভাড়া পরিশোধ
-                    করুন।
-                    ধন্যবাদ </i></p>
         </div>
     </div>
 </body>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-// error_reporting(0);
+error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';
 include ROOT . '/includes/header.php';
@@ -128,8 +128,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group">
-                                        <!-- Apartment select hole jquery diye oi apt er monthly fair check kore show korate hobe -->
+                                    <!-- <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="email-input" class=" form-control-label">Monthly Rent</label>
                                         </div>
@@ -137,7 +136,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <input type="number" name="monRent" class="form-control"
                                                 placeholder="Monthly rent Amount" required>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="email-input" class=" form-control-label">Tenant Start
@@ -150,8 +149,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Select Building of the
-                                                Apartment</label>
+                                            <label for="select" class=" form-control-label">Select Building</label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <select name="whichbuilding" id="selectbld" class="form-control">
@@ -164,8 +162,8 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- Building select korar por auto blank apartment list gulo ashbe -->
                                     <div id="blankdBld"></div>
+                                    <div id="pred"></div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="text-input" class=" form-control-label">NID Number</label>
@@ -242,6 +240,14 @@ include ROOT . '/includes/sidebar.php'; ?>
         });
         $("#info-form").on('change', '#selectflr', function () {
             selectedFlr = $(this).val();
+            $.ajax({
+                method: "GET",
+                url: "/ams/apt-fair-backend.php",
+                data: "flr=" + selectedFlr,
+                success: function (response) {
+                    $("#pred").html(response);
+                }
+            })
         });
     });
 </script>
@@ -257,7 +263,7 @@ if (isset($_POST['submitBtn'])) {
     $po = $_POST['po'];
     $ps = $_POST['ps'];
     $district = $_POST['district'];
-    // $monRent = $_POST['monRent'];
+    $monRent = $_SESSION['apt_fair_for_tenant'];
     $startDate = $_POST['startDate'];
     $selectBuilding = $_POST['whichbuilding'];
     $apartment = $_POST['whichfloor'];
