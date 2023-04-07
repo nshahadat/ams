@@ -41,6 +41,9 @@
                         <li>
                             <a href="/ams/apt-list.php">Apartment List</a>
                         </li>
+                        <li>
+                            <a href="/ams/apt-blank-list.php">Blank Apartment List</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="has-sub">
@@ -52,9 +55,6 @@
                         </li>
                         <li>
                             <a href="/ams/tenants-list.php">Tenant List</a>
-                        </li>
-                        <li>
-                            <a href="/ams/rent-collect.php">Collect Rent</a>
                         </li>
                     </ul>
                 </li>
@@ -76,9 +76,29 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="/ams/rent-status.php">
-                        <i class="fas  fa-bar-chart-o"></i>Rent Status</a>
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas  fa-bar-chart-o"></i>Rent</a>
+                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                        <li>
+                            <a href="/ams/rent-status.php">Rent Status</a>
+                        </li>
+                        <li>
+                            <a href="/ams/rent-collect.php">Collect Rent</a>
+                        </li>
+                        <li>
+                            <a href="/ams/invoices.php">Invoices</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="zmdi zmdi-file-text"></i>Deed</a>
+                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                        <li>
+                            <a href="/ams/deed-list.php">Deed List</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="/ams/check-complain.php">

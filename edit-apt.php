@@ -67,7 +67,7 @@ if (isset($_POST['addApt'])) {
     $owner = $_POST['ownerName'];
     $fair = $_POST['monthfair'];
 
-    $insertaptsql = "UPDATE $apartment SET aptOwner = '$owner', aptFair = '$fair'";
+    $insertaptsql = "UPDATE $apartment SET aptOwner = '$owner', aptFair = '$fair' WHERE apartmentName = '$getapt'";
     $mysqli->query($insertaptsql) or die($mysqli->error);
 
     echo "<script>

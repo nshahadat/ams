@@ -166,6 +166,10 @@ session_start();
                             </div>
                             <div class="account-dropdown js-dropdown">
                                 <div class="account-dropdown__footer">
+                                    <a href="/ams/edit-admin.php">
+                                        <i class="zmdi zmdi-account-circle"></i>Account</a>
+                                </div>
+                                <div class="account-dropdown__footer">
                                     <a href="/ams/userlogout.php">
                                         <i class="zmdi zmdi-power"></i>Logout</a>
                                 </div>
