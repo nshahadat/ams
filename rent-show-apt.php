@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location:/ams/admin.php");
+}
 error_reporting(0);
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/db-config.php';

@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location:/ams/admin.php");
+}
 define('ROOT', 'C:/xampp/htdocs/ams');
 include ROOT . '/includes/header.php';
 ?>
