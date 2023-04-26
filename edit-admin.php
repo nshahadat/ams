@@ -14,6 +14,12 @@ include ROOT . '/includes/sidebar.php'; ?>
     include ROOT . '/includes/header-desktop.php';
     ?>
 
+    <?php
+    $usersql = "SELECT * FROM admin";
+    $resultforupdate = mysqli_query($mysqli, $usersql) or die(mysqli_error($mysqli));
+    $dataforupdate = $resultforupdate->fetch_assoc();
+    ?>
+
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
@@ -28,41 +34,40 @@ include ROOT . '/includes/sidebar.php'; ?>
                                     id="info-form">
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">Tenant Name
+                                            <label for="text-input" class=" form-control-label">Admin Name
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <h4 class="form-text text-muted">
-                                                <?= $dataforupdate['tenantName'] ?>
-                                                <a href="/ams/modal-for-update.php?update=name&user=<?= $user ?>"
-                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                <?= $dataforupdate['adminName'] ?>
+                                                <a href="/ams/modal-for-admin.php?update=name" target="_blank"><input
+                                                        type="button" name="submitBtn" value="Update"
                                                         class="btn btn-primary btn-sm"></a>
                                             </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="email-input" class=" form-control-label">Tenant Email
+                                            <label for="email-input" class=" form-control-label">Admin Email
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <h4 class="form-text text-muted">
-                                                <?= $dataforupdate['tenantEmail'] ?>
-                                                <a href="/ams/modal-for-update.php?update=email&user=<?= $user ?>"
-                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                <?= $dataforupdate['adminEmail'] ?>
+                                                <a href="/ams/modal-for-admin.php?update=email" target="_blank"><input
+                                                        type="button" name="submitBtn" value="Update"
                                                         class="btn btn-primary btn-sm"></a>
                                             </h4>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="email-input" class=" form-control-label">Tenant Mobile
+                                            <label for="email-input" class=" form-control-label">Admin password
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <h4 class="form-text text-muted">
-                                                <?= $dataforupdate['tenantContact'] ?>
-                                                <a href="/ams/modal-for-update.php?update=mobile&user=<?= $user ?>"
+                                                <a href="/ams/modal-for-admin.php?update=password"
                                                     target="_blank"><input type="button" name="submitBtn" value="Update"
                                                         class="btn btn-primary btn-sm"></a>
                                             </h4>

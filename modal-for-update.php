@@ -256,6 +256,54 @@ $resultbld = mysqli_query($mysqli, $fetchbldsql) or die(mysqli_error($mysqli));
                             </div>
 
                             <?php break;
+
+                        case 'nidf': ?>
+                            <form action="#" method="post" enctype="multipart/form-data">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="file-input" class=" form-control-label">Upload Front side of the
+                                            NID</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="file" id="file-input" name="tenantNIDfront" accept="image/*"
+                                            class="form-control-file">
+                                    </div>
+                                </div>
+                            </form>
+
+                            <?php break;
+
+                        case 'nidb': ?>
+                            <form action="#" method="post" enctype="multipart/form-data">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="file-input" class=" form-control-label">Upload Back side of the
+                                            NID</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="file" id="file-input" name="tenantNIDback" accept="image/*"
+                                            class="form-control-file">
+                                    </div>
+                                </div>
+                            </form>
+
+                            <?php break;
+
+                        case 'picture': ?>
+                            <form action="#" method="post" enctype="multipart/form-data">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="file-input" class=" form-control-label">Upload Picture of the
+                                            tenant</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="file" id="file-input" name="tenantpicture" accept="image/*"
+                                            class="form-control-file">
+                                    </div>
+                                </div>
+                            </form>
+
+                            <?php break;
                         default:
                             echo "<script>window.close();</script>";
                             break;
@@ -467,6 +515,53 @@ if (isset($_POST['updateBtn'])) {
             alert('Updated Succesfully!');
             window.close();
             </script>";
+            break;
+
+        case 'nidf':
+            $nidFront = $_FILES['tenantNIDfront']['name'];
+            $nidFrontTemp = $_FILES['tenantNIDfront']['tmp_name'];
+            $nidFrontDir = '/ams/users/tenants/tenantsNID/' . $nidFront;
+            $pathnidfront = ROOT . '/users/tenants/tenantsNID/' . $nidFront;
+
+            $sql = "UPDATE $tenant SET 
+                nidFrontDir = '$nidFrontDir' 
+                WHERE tenantID = '$user'";
+
+            $mysqli->query($sql) or die($mysqli->error);
+            move_uploaded_file($nidFrontTemp, $pathnidfront);
+
+            echo "<script>
+                alert('Updated Succesfully!');
+                window.close();
+                </script>";
+            break;
+
+        case 'nidb':
+            $nidno = $_POST['nidno'];
+
+            $sql = "UPDATE $tenant SET 
+                    nidNumber = '$nidno' 
+                    WHERE tenantID = '$user'";
+
+            $mysqli->query($sql) or die($mysqli->error);
+            echo "<script>
+                    alert('Updated Succesfully!');
+                    window.close();
+                    </script>";
+            break;
+
+        case 'picture':
+            $nidno = $_POST['nidno'];
+
+            $sql = "UPDATE $tenant SET 
+                        nidNumber = '$nidno' 
+                        WHERE tenantID = '$user'";
+
+            $mysqli->query($sql) or die($mysqli->error);
+            echo "<script>
+                        alert('Updated Succesfully!');
+                        window.close();
+                        </script>";
             break;
         default:
             echo "<script>window.close();</script>";

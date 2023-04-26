@@ -219,6 +219,45 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             </h4>
                                         </div>
                                     </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label for="text-input" class=" form-control-label">NID Front Picture
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <h4 class="form-text text-muted">
+                                                <a href="/ams/modal-for-update.php?update=nidf&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label for="text-input" class=" form-control-label">NID Back Picture
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <h4 class="form-text text-muted">
+                                                <a href="/ams/modal-for-update.php?update=nidb&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label for="text-input" class=" form-control-label">Tenant Picture
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <h4 class="form-text text-muted">
+                                                <a href="/ams/modal-for-update.php?update=picture&user=<?= $user ?>"
+                                                    target="_blank"><input type="button" name="submitBtn" value="Update"
+                                                        class="btn btn-primary btn-sm"></a>
+                                            </h4>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>

@@ -50,7 +50,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 <?php if ($data['ext'] == 'jpg' or $data['ext'] == 'jpeg' or $data['ext'] == 'png') { ?>
                                                     <div style="display:flex; flex-direction:column; gap:1vh;">
                                                         <img src="<?= $data['deedPath'] ?>" alt="deed" class="deedimg">
-                                                        <a href="<?= $data['deedPath'] ?>"><button type="button"
+                                                        <a href="<?= $data['deedPath'] ?>" Download><button type="button"
                                                                 class="btn btn-outline-success btn-sm">Download</button></a>
                                                     </div>
                                                 <?php } else { ?>

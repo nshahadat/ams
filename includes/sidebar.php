@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!-- MENU SIDEBAR-->
 <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
@@ -8,7 +9,9 @@
             <ul class="list-unstyled navbar__list">
                 <li>
                     <a href="/ams/dashboard.php">
-                        <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        <i class="fas fa-tachometer-alt"></i>
+                        <?= $_SESSION['usertype'] ?>
+                    </a>
                 </li>
                 <li class="has-sub">
                     <a class="js-arrow" href="#">
@@ -91,6 +94,20 @@
                         </li>
                     </ul>
                 </li>
+                <?php if ($_SESSION['usertype'] = "admin") { ?>
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-users"></i>Manager</a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
+                                <a href="/ams/add-building.php">Add Manager</a>
+                            </li>
+                            <li>
+                                <a href="/ams/building-list.php">Manager List</a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php } ?>
                 <li>
                     <a href="/ams/check-complain.php">
                         <i class="fas fa-check-square"></i>Check Complain</a>
