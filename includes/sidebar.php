@@ -2,7 +2,8 @@
 <!-- MENU SIDEBAR-->
 <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
-        <h4>Apartment Management System</h4>
+        <img src="/ams/media/OJYTSC11.png" alt="" width="50" style="margin-right:10px;">
+        <h4>FQ Proparty Development</h4>
     </div>
     <div class="menu-sidebar__content js-scrollbar1">
         <nav class="navbar-sidebar">
@@ -10,7 +11,7 @@
                 <li>
                     <a href="/ams/dashboard.php">
                         <i class="fas fa-tachometer-alt"></i>
-                        <?= $_SESSION['usertype'] ?>
+                        Dashboard
                     </a>
                 </li>
                 <li class="has-sub">
@@ -94,16 +95,16 @@
                         </li>
                     </ul>
                 </li>
-                <?php if ($_SESSION['usertype'] = "admin") { ?>
+                <?php if ($_SESSION['usertype'] == "admin") { ?>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-users"></i>Manager</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="/ams/add-building.php">Add Manager</a>
+                                <a href="/ams/add-manager.php">Add Manager</a>
                             </li>
                             <li>
-                                <a href="/ams/building-list.php">Manager List</a>
+                                <a href="/ams/manager-list.php">Manager List</a>
                             </li>
                         </ul>
                     </li>

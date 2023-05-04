@@ -1,0 +1,83 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location:/ams/admin.php");
+}
+error_reporting(0);
+define('ROOT', 'C:/xampp/htdocs/ams');
+include ROOT . '/includes/db-config.php';
+include ROOT . '/includes/header.php';
+include ROOT . '/includes/header-mobile.php';
+include ROOT . '/includes/sidebar.php'; ?>
+<div class="page-container">
+    <?php
+    include ROOT . '/includes/header-desktop.php';
+    ?>
+    <?php
+    // $user = $_SESSION['usertype'];
+// if (isset($user)) {
+//     if ($user != 'admin') {
+//         echo "<script>
+//         alert('Youre not allowed to access this page.');
+//         window.location='/apartment/manager/managerFeed.php';
+//         </script>";
+//     }
+// }
+    
+    $sqlformanager = "SELECT * FROM manager";
+    $resultforman = mysqli_query($mysqli, $sqlformanager) or die(mysqli_error($mysqli));
+
+    ?>
+
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-11">
+                        <h2 class="building__header">All the Manager</h2>
+                        <div class="table-responsive table--no-card m-b-30">
+                            <table class="table table-borderless table-striped table-earning">
+                                <thead>
+                                    <tr>
+                                        <th>Manager Name</th>
+                                        <th>Manager Email</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($dataforman = $resultforman->fetch_assoc()) { ?>
+                                        <tr>
+                                            <td>
+                                                <?= $dataforman['managerName'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $dataforman['managerEmail'] ?>
+                                            </td>
+                                            <td>
+                                                <a class="custom__a"
+                                                    href="/ams/update-manager.php?user=<?= $dataforman['managerID'] ?>">
+                                                    <button type="button"
+                                                        class="btn btn-outline-success btn-sm">Edit</button></a>
+                                            </td>
+                                            <td>
+                                                <a class="custom__a"
+                                                    href="/ams/del-manager.php?user=<?= $dataforman['managerID'] ?>">
+                                                    <button type="button"
+                                                        class="btn btn-outline-danger btn-sm">Delete</button></a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+include ROOT . '/includes/footer.php';
+?>

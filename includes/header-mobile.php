@@ -3,7 +3,8 @@
     <div class="header-mobile__bar">
         <div class="container-fluid">
             <div class="header-mobile-inner">
-                <h4>Apartment Management System</h4>
+                <img src="/ams/media/OJYTSC11.png" alt="" width="50" style="margin-right:10px;">
+                <h4>FQ Proparty Development</h4>
                 <button class="hamburger hamburger--slider" type="button">
                     <span class="hamburger-box">
                         <span class="hamburger-inner"></span>

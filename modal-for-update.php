@@ -258,50 +258,43 @@ $resultbld = mysqli_query($mysqli, $fetchbldsql) or die(mysqli_error($mysqli));
                             <?php break;
 
                         case 'nidf': ?>
-                            <form action="#" method="post" enctype="multipart/form-data">
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label for="file-input" class=" form-control-label">Upload Front side of the
-                                            NID</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="file" id="file-input" name="tenantNIDfront" accept="image/*"
-                                            class="form-control-file">
-                                    </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="file-input" class="form-control-label">Upload Front side of the NID</label>
                                 </div>
-                            </form>
+                                <div class="col-12 col-md-9">
+                                    <input type="file" id="file-input" name="tenantNIDfront" accept="image/*"
+                                        class="form-control-file">
+                                </div>
+                            </div>
 
                             <?php break;
 
                         case 'nidb': ?>
-                            <form action="#" method="post" enctype="multipart/form-data">
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label for="file-input" class=" form-control-label">Upload Back side of the
-                                            NID</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="file" id="file-input" name="tenantNIDback" accept="image/*"
-                                            class="form-control-file">
-                                    </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="file-input" class=" form-control-label">Upload Back side of the
+                                        NID</label>
                                 </div>
-                            </form>
+                                <div class="col-12 col-md-9">
+                                    <input type="file" id="file-input" name="tenantNIDback" accept="image/*"
+                                        class="form-control-file">
+                                </div>
+                            </div>
 
                             <?php break;
 
                         case 'picture': ?>
-                            <form action="#" method="post" enctype="multipart/form-data">
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label for="file-input" class=" form-control-label">Upload Picture of the
-                                            tenant</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="file" id="file-input" name="tenantpicture" accept="image/*"
-                                            class="form-control-file">
-                                    </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="file-input" class=" form-control-label">Upload Picture of the
+                                        tenant</label>
                                 </div>
-                            </form>
+                                <div class="col-12 col-md-9">
+                                    <input type="file" id="file-input" name="tenantpicture" accept="image/*"
+                                        class="form-control-file">
+                                </div>
+                            </div>
 
                             <?php break;
                         default:
@@ -313,8 +306,7 @@ $resultbld = mysqli_query($mysqli, $fetchbldsql) or die(mysqli_error($mysqli));
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     onclick="gotoMain()">Close</button>
-                <form action="#" method="POST">
-                    <input type="submit" value="Update" name="updateBtn" class="btn btn-primary">
+                <input type="submit" value="Update" name="updateBtn" class="btn btn-primary">
                 </form>
             </div>
         </div>
@@ -523,45 +515,62 @@ if (isset($_POST['updateBtn'])) {
             $nidFrontDir = '/ams/users/tenants/tenantsNID/' . $nidFront;
             $pathnidfront = ROOT . '/users/tenants/tenantsNID/' . $nidFront;
 
-            $sql = "UPDATE $tenant SET 
-                nidFrontDir = '$nidFrontDir' 
-                WHERE tenantID = '$user'";
+            // Check if file was uploaded successfully
+            if ($_FILES['tenantNIDfront']['error'] === UPLOAD_ERR_OK) {
+                // Move uploaded file to its final destination
+                if (move_uploaded_file($nidFrontTemp, $pathnidfront)) {
+                    $sql = "UPDATE $tenant SET nidFrontDir = '$nidFrontDir' WHERE tenantID = '$user'";
+                    $mysqli->query($sql) or die($mysqli->error);
+                    echo "<script>alert('Updated Successfully!'); window.close();</script>";
+                } else {
+                    echo "Error: Failed to move uploaded file.";
+                }
+            } else {
+                echo "Error: " . $_FILES['tenantNIDfront']['error'];
+            }
 
-            $mysqli->query($sql) or die($mysqli->error);
-            move_uploaded_file($nidFrontTemp, $pathnidfront);
-
-            echo "<script>
-                alert('Updated Succesfully!');
-                window.close();
-                </script>";
             break;
 
         case 'nidb':
-            $nidno = $_POST['nidno'];
+            $nidback = $_FILES['tenantNIDback']['name'];
+            $nidbackTemp = $_FILES['tenantNIDback']['tmp_name'];
+            $nidbackDir = '/ams/users/tenants/tenantsNID/' . $nidback;
+            $pathnidback = ROOT . '/users/tenants/tenantsNID/' . $nidback;
 
-            $sql = "UPDATE $tenant SET 
-                    nidNumber = '$nidno' 
-                    WHERE tenantID = '$user'";
-
-            $mysqli->query($sql) or die($mysqli->error);
-            echo "<script>
-                    alert('Updated Succesfully!');
-                    window.close();
-                    </script>";
+            // Check if file was uploaded successfully
+            if ($_FILES['tenantNIDback']['error'] === UPLOAD_ERR_OK) {
+                // Move uploaded file to its final destination
+                if (move_uploaded_file($nidbackTemp, $pathnidback)) {
+                    $sql = "UPDATE $tenant SET nidBackDir = '$nidbackDir' WHERE tenantID = '$user'";
+                    $mysqli->query($sql) or die($mysqli->error);
+                    echo "<script>alert('Updated Successfully!'); window.close();</script>";
+                } else {
+                    echo "Error: Failed to move uploaded file.";
+                }
+            } else {
+                echo "Error: " . $_FILES['tenantNIDback']['error'];
+            }
             break;
 
         case 'picture':
-            $nidno = $_POST['nidno'];
+            $picture = $_FILES['tenantpicture']['name'];
+            $pictureTemp = $_FILES['tenantpicture']['tmp_name'];
+            $pictureDir = '/ams/users/tenants/tenantsNID/' . $picture;
+            $pathpicture = ROOT . '/users/tenants/tenantsNID/' . $picture;
 
-            $sql = "UPDATE $tenant SET 
-                        nidNumber = '$nidno' 
-                        WHERE tenantID = '$user'";
-
-            $mysqli->query($sql) or die($mysqli->error);
-            echo "<script>
-                        alert('Updated Succesfully!');
-                        window.close();
-                        </script>";
+            // Check if file was uploaded successfully
+            if ($_FILES['tenantpicture']['error'] === UPLOAD_ERR_OK) {
+                // Move uploaded file to its final destination
+                if (move_uploaded_file($pictureTemp, $pathpicture)) {
+                    $sql = "UPDATE $tenant SET profilepic = '$pictureDir' WHERE tenantID = '$user'";
+                    $mysqli->query($sql) or die($mysqli->error);
+                    echo "<script>alert('Updated Successfully!'); window.close();</script>";
+                } else {
+                    echo "Error: Failed to move uploaded file.";
+                }
+            } else {
+                echo "Error: " . $_FILES['tenantpicture']['error'];
+            }
             break;
         default:
             echo "<script>window.close();</script>";

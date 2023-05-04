@@ -8,7 +8,9 @@
     <meta name="author" content="Kazi Nayeem Hossain" />
 
     <!-- Title Page-->
-    <title>AMS</title>
+    <title>FQ Proparty Development</title>
+
+    <link rel="icon" href="/ams/media/favicon.png">
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all" />
