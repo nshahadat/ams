@@ -55,7 +55,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <label for="select" class=" form-control-label">Rent of the month</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <select name="paymentmonth" id="select" class="form-control">
+                                            <select name="paymentmonth" id="selectmonth" class="form-control">
                                                 <option value="January">January</option>
                                                 <option value="February">February</option>
                                                 <option value="March">March</option>
@@ -69,6 +69,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 <option value="November">November</option>
                                                 <option value="December">December</option>
                                             </select>
+                                            <small id="warningdate" style="color: red;"></small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -76,7 +77,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                             <label for="text-input" class=" form-control-label">Received from</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="receivedfrom"
+                                            <input type="text" id="recfrom" name="receivedfrom"
                                                 placeholder="Enter Full Name" class="form-control">
                                             <small class="form-text text-muted">Person who is giving the rent</small>
                                         </div>
@@ -176,7 +177,6 @@ include ROOT . '/includes/sidebar.php'; ?>
 
         $("#selectbld").change(function () {
             selectedBld = $(this).val();
-            console.log(selectedBld);
 
             $.ajax({
                 method: "GET",
@@ -189,7 +189,6 @@ include ROOT . '/includes/sidebar.php'; ?>
         });
         $("#info-form").on('change', '#selectflr', function () {
             selectedFlr = $(this).val();
-            console.log(selectedFlr);
             $.ajax({
                 method: "GET",
                 url: "/ams/dues-backend.php",
@@ -202,7 +201,6 @@ include ROOT . '/includes/sidebar.php'; ?>
         $("#totalbtn").click(function () {
             monthbtn = document.getElementById('monthly');
             monthvalue = monthbtn.placeholder;
-            console.log(monthvalue);
             elcbtn = document.getElementById('elc');
             elcvalue = elcbtn.value;
             gasbtn = document.getElementById('gas');
@@ -219,11 +217,51 @@ include ROOT . '/includes/sidebar.php'; ?>
                 data: "month=" + monthvalue + "&elc=" + elcvalue + "&gas=" + gasvalue + "&prev=" + prevvalue + "&rec=" + recvalue + "&other=" + othervalue,
                 success: function (response) {
                     $("#tots").html(response);
-                    console.log(response);
 
                 }
             })
         });
+
+        var moveInDate = new Date('<?php echo date("M d, Y", strtotime($_SESSION['rentstart'])); ?>');
+        var moveInMonth = moveInDate.getMonth();
+        var moveInYear = moveInDate.getFullYear();
+
+        $('#selectmonth').on('change', function () {
+
+            var selectedMonth = $(this).val();
+            var selectedDate = new Date(selectedMonth + ' 1, ' + moveInDate.getFullYear());
+            var selectedMonthNew = selectedDate.getMonth();
+            var selectedYear = selectedDate.getFullYear();
+
+            if (selectedYear < moveInYear || (selectedYear == moveInYear && selectedMonthNew < moveInMonth)) {
+
+                $('#warningdate').text('Rent cannot be accepted for months before the move-in date.');
+                var recamount = $('#recamount');
+                var recfrom = $('#recfrom');
+                var gas = $('#gas');
+                var elc = $('#elc');
+                var other = $('#other');
+                recamount.prop('disabled', true);
+                recfrom.prop('disabled', true);
+                gas.prop('disabled', true);
+                elc.prop('disabled', true);
+                other.prop('disabled', true);
+            } else {
+
+                $('#warningdate').empty();
+                var recamount = $('#recamount');
+                var recfrom = $('#recfrom');
+                var gas = $('#gas');
+                var elc = $('#elc');
+                var other = $('#other');
+                recamount.prop('disabled', false);
+                recfrom.prop('disabled', false);
+                gas.prop('disabled', false);
+                elc.prop('disabled', false);
+                other.prop('disabled', false);
+            }
+        });
+
     });
 </script>
 

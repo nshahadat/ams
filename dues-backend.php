@@ -23,6 +23,8 @@ $datafora = $resultfora->fetch_assoc();
 
 $_SESSION['prevdues'] = $datafordue['dueAmount'];
 $_SESSION['monfair'] = $datafora['aptFair'];
+
+$_SESSION['rentstart'] = $datafort['tenantStart'];
 ?>
 
 <div class="row form-group" id="due">
