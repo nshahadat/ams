@@ -23,7 +23,7 @@ $datafora = $resultfora->fetch_assoc();
 
 $_SESSION['prevdues'] = $datafordue['dueAmount'];
 $_SESSION['monfair'] = $datafora['aptFair'];
-
+unset($_SESSION['rentstart']);
 $_SESSION['rentstart'] = $datafort['tenantStart'];
 ?>
 

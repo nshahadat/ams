@@ -56,6 +56,7 @@ include ROOT . '/includes/sidebar.php'; ?>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <select name="paymentmonth" id="selectmonth" class="form-control">
+                                                <option disabled selected>Choose</option>
                                                 <option value="January">January</option>
                                                 <option value="February">February</option>
                                                 <option value="March">March</option>
@@ -68,6 +69,29 @@ include ROOT . '/includes/sidebar.php'; ?>
                                                 <option value="October">October</option>
                                                 <option value="November">November</option>
                                                 <option value="December">December</option>
+                                            </select>
+                                            <small id="warningdate" style="color: red;"></small>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label for="select" class=" form-control-label">Rent of the year</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="paymentyear" id="selectyear" class="form-control">
+                                                <option disabled selected>Choose</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                                <option value="2030">2030</option>
+                                                <option value="2031">2031</option>
+                                                <option value="2032">2032</option>
                                             </select>
                                             <small id="warningdate" style="color: red;"></small>
                                         </div>
@@ -222,16 +246,34 @@ include ROOT . '/includes/sidebar.php'; ?>
             })
         });
 
-        var moveInDate = new Date('<?php echo date("M d, Y", strtotime($_SESSION['rentstart'])); ?>');
-        var moveInMonth = moveInDate.getMonth();
-        var moveInYear = moveInDate.getFullYear();
 
-        $('#selectmonth').on('change', function () {
 
-            var selectedMonth = $(this).val();
-            var selectedDate = new Date(selectedMonth + ' 1, ' + moveInDate.getFullYear());
+        $('#selectyear').on('change', function () {
+
+            $.ajax({
+                method: "GET",
+                async: false,
+                url: "/ams/getsession.php",
+                success: function (data) {
+                    sessiondate = data;
+                }
+            })
+
+            var moveInDate = new Date(sessiondate);
+            var moveInMonth = moveInDate.getMonth();
+            var moveInYear = moveInDate.getFullYear();
+            console.log(moveInDate);
+            console.log(moveInMonth);
+            console.log(moveInYear);
+            console.log(sessiondate);
+
+
+            var selectedMonth = $('#selectmonth').val();
+            var selectedYear = $(this).val();
+            var selectedDate = new Date(selectedMonth + ' 1, ' + selectedYear);
             var selectedMonthNew = selectedDate.getMonth();
-            var selectedYear = selectedDate.getFullYear();
+            console.log(selectedMonthNew);
+            console.log(selectedYear);
 
             if (selectedYear < moveInYear || (selectedYear == moveInYear && selectedMonthNew < moveInMonth)) {
 
@@ -246,6 +288,19 @@ include ROOT . '/includes/sidebar.php'; ?>
                 gas.prop('disabled', true);
                 elc.prop('disabled', true);
                 other.prop('disabled', true);
+            } else if (selectedYear < moveInYear || (selectedYear == moveInYear && selectedMonthNew == moveInMonth)) {
+
+                $('#warningdate').empty();
+                var recamount = $('#recamount');
+                var recfrom = $('#recfrom');
+                var gas = $('#gas');
+                var elc = $('#elc');
+                var other = $('#other');
+                recamount.prop('disabled', false);
+                recfrom.prop('disabled', false);
+                gas.prop('disabled', false);
+                elc.prop('disabled', false);
+                other.prop('disabled', false);
             } else {
 
                 $('#warningdate').empty();
